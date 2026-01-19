@@ -2611,32 +2611,24 @@
     ]
   },
   "packageFolders": {
-    "C:\\Users\\CR381GR\\.nuget\\packages\\": {},
-    "C:\\Program Files (x86)\\Microsoft Visual Studio\\Shared\\NuGetPackages": {}
+    "C:\\Users\\user1\\.nuget\\packages\\": {}
   },
   "project": {
     "version": "1.0.0",
     "restore": {
-      "projectUniqueName": "C:\\Users\\CR381GR\\OneDrive - EY\\Desktop\\Project\\TEAM1--TIP\\EFTicketPortalLibrary\\EFTicketPortalLibrary.csproj",
+      "projectUniqueName": "C:\\Users\\user1\\Ticket Portal\\TEAM1--TIP\\EFTicketPortalLibrary\\EFTicketPortalLibrary.csproj",
       "projectName": "EFTicketPortalLibrary",
-      "projectPath": "C:\\Users\\CR381GR\\OneDrive - EY\\Desktop\\Project\\TEAM1--TIP\\EFTicketPortalLibrary\\EFTicketPortalLibrary.csproj",
-      "packagesPath": "C:\\Users\\CR381GR\\.nuget\\packages\\",
-      "outputPath": "C:\\Users\\CR381GR\\OneDrive - EY\\Desktop\\Project\\TEAM1--TIP\\EFTicketPortalLibrary\\obj\\",
+      "projectPath": "C:\\Users\\user1\\Ticket Portal\\TEAM1--TIP\\EFTicketPortalLibrary\\EFTicketPortalLibrary.csproj",
+      "packagesPath": "C:\\Users\\user1\\.nuget\\packages\\",
+      "outputPath": "C:\\Users\\user1\\Ticket Portal\\TEAM1--TIP\\EFTicketPortalLibrary\\obj\\",
       "projectStyle": "PackageReference",
-      "fallbackFolders": [
-        "C:\\Program Files (x86)\\Microsoft Visual Studio\\Shared\\NuGetPackages"
-      ],
       "configFilePaths": [
-        "C:\\Users\\CR381GR\\AppData\\Roaming\\NuGet\\NuGet.Config",
-        "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.FallbackLocation.config",
-        "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.Offline.config"
+        "C:\\Users\\user1\\AppData\\Roaming\\NuGet\\NuGet.Config"
       ],
       "originalTargetFrameworks": [
         "net10.0"
       ],
       "sources": {
-        "C:\\Program Files (x86)\\Microsoft SDKs\\NuGetPackages\\": {},
-        "C:\\Program Files\\dotnet\\library-packs": {},
         "https://api.nuget.org/v3/index.json": {}
       },
       "frameworks": {
@@ -2684,7 +2676,7 @@
             "privateAssets": "all"
           }
         },
-        "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\10.0.101/PortableRuntimeIdentifierGraph.json",
+        "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\10.0.100/PortableRuntimeIdentifierGraph.json",
         "packagesToPrune": {
           "Microsoft.CSharp": "(,4.7.32767]",
           "Microsoft.VisualBasic": "(,10.4.32767]",
