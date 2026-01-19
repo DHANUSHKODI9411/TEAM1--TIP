@@ -24,7 +24,7 @@ public string? EmployeeName {get;set;}
 [MaxLength(100,ErrorMessage ="Email Id cannot exceed 100 characters")]
 public string? Email { get; set; }
 
-[Column(TypeName ="Varchar(255)")]
+[Column(TypeName ="Varchar(15)")]
 [Required(ErrorMessage ="Password is required")]
 [StringLength(15,MinimumLength =8,ErrorMessage ="Password must be between 8 to 15 characters")]
 public string? Password { get; set;}
@@ -34,21 +34,21 @@ public enum RoleType { User, Admin }
     [Required]
     public RoleType Role { get; set; } = RoleType.User;
 
-[JsonIgnore] 
-        [InverseProperty("Employee")] 
-        public virtual ICollection<Ticket> CreatedTickets { get; set; }
 
-        [JsonIgnore] 
+ [InverseProperty("Employee")] 
+        public virtual ICollection<Ticket> CreatedTickets { get; set; } = new List<Ticket>();
+
+        [JsonIgnore]
         [InverseProperty("AssignedEmployee")] 
-        public virtual ICollection<Ticket> AssignedTickets { get; set; }
+        public virtual ICollection<Ticket> AssignedTickets { get; set; } = new List<Ticket>();
 
-        [JsonIgnore] 
+        [JsonIgnore]
         [InverseProperty("Employee")] 
-        public virtual ICollection<TicketReplies> CreatedEmpReplies { get; set; }
+        public virtual ICollection<TicketReplies> CreatedEmpReplies { get; set; } = new List<TicketReplies>();
 
-        [JsonIgnore] 
+        [JsonIgnore]
         [InverseProperty("AssignedEmployee")] 
-        public virtual ICollection<TicketReplies> AssignedEmpReplies { get; set; }
+        public virtual ICollection<TicketReplies> AssignedEmpReplies { get; set; } = new List<TicketReplies>();
 
 }
 }
