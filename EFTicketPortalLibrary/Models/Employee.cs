@@ -34,10 +34,21 @@ public enum RoleType { User, Admin }
     [Required]
     public RoleType Role { get; set; } = RoleType.User;
 
-[JsonIgnore] public virtual ICollection<Ticket> CreatedTickets { get; set; }
-[JsonIgnore] public virtual ICollection<Ticket> AssignedTickets { get; set; }
-[JsonIgnore] public virtual ICollection<TicketReplies> CreatedEmpReplies{ get; set; }
-[JsonIgnore] public virtual ICollection<TicketReplies> AssignedEmpReplies{ get; set; }
+[JsonIgnore] 
+        [InverseProperty("Employee")] 
+        public virtual ICollection<Ticket> CreatedTickets { get; set; }
+
+        [JsonIgnore] 
+        [InverseProperty("AssignedEmployee")] 
+        public virtual ICollection<Ticket> AssignedTickets { get; set; }
+
+        [JsonIgnore] 
+        [InverseProperty("Employee")] 
+        public virtual ICollection<TicketReplies> CreatedEmpReplies { get; set; }
+
+        [JsonIgnore] 
+        [InverseProperty("AssignedEmployee")] 
+        public virtual ICollection<TicketReplies> AssignedEmpReplies { get; set; }
 
 }
 }
