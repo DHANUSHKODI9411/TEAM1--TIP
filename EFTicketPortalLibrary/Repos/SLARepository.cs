@@ -6,9 +6,9 @@ namespace EFTicketPortalLibrary.Repositories
 {
     public class SLARepository : ISLARepository
     {
-        private readonly AppDbContext _context;
+        private readonly TicketPortalDbContext _context;
 
-        public SLARepository(AppDbContext context)
+        public SLARepository(TicketPortalDbContext context)
         {
             _context = context;
         }
@@ -118,7 +118,4 @@ namespace EFTicketPortalLibrary.Repositories
         }
     }
 
-    internal class AppDbContext
-    {
-    }
 }
