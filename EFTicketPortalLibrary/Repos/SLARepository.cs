@@ -1,5 +1,7 @@
 using EFTicketPortalLibrary.Models;
 using Microsoft.EntityFrameworkCore;
+using Microsoft.Data.SqlClient;
+
 using System;
 
 namespace EFTicketPortalLibrary.Repositories

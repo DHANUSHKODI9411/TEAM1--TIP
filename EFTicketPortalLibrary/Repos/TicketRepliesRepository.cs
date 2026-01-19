@@ -1,10 +1,12 @@
 using System;
 using EFTicketPortalLibrary.Models;
 namespace EFTicketPortalLibrary.Repos;
+using Microsoft.Data.SqlClient;
+using Microsoft.EntityFrameworkCore;
 
 public class TicketRepliesRepository : ITicketRepliesRepository
 {
-    EYTicketPortalDBContext context = new EYTicketPortalDBContext();  // Replace with your actual DbContext
+    TicketPortalDbContext context = new TicketPortalDbContext();  // Replace with your actual DbContext
  
     public async Task AddTicketReplyAsync(TicketReplies reply)
     {

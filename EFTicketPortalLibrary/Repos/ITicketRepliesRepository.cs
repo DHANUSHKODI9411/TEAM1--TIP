@@ -1,21 +1,14 @@
-using System;
 using EFTicketPortalLibrary.Models;
 
 namespace EFTicketPortalLibrary.Repos;
 
 public interface ITicketRepliesRepository
 {
-        Task<TicketReplies> GetAllRepliesAsync();
+    Task<List<TicketReplies>> GetAllTicketRepliesAsync();
+    Task<TicketReplies> GetTicketReplyAsync(string replyId);
+    Task<List<TicketReplies>> GetRepliesByTicketAsync(string ticketId);
 
-        Task<TicketReplies?> GetReplyByIdAsync(string replyId);
-
-        Task<TicketReplies> GetRepliesByTicketIdAsync(string ticketId);
-
-        Task AddReplyAsync(TicketReplies reply);
-
-        Task UpdateReplyAsync(TicketReplies reply);
-
-        Task DeleteReplyAsync(string replyId);
-
-    
+    Task AddTicketReplyAsync(TicketReplies reply);
+    Task UpdateTicketReplyAsync(string replyId, TicketReplies reply);
+    Task DeleteTicketReplyAsync(string replyId);
 }
