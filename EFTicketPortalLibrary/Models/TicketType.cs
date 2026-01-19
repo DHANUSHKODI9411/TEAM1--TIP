@@ -1,26 +1,28 @@
+using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
 
-namespace EFTicketPortalLibrary.Models
+namespace EFTicketPortalLibrary.Models;
+
+[Table("TICKET-TYPE")]
+public class TicketType
 {
-    [Table("TICKET_TYPE")]
-    public class TicketType
-    {
-        [Key]
-        [Display(Name = "Type ID")]
-        public int TicketTypeId { get; set; }
+    [Key]
+    [DatabaseGenerated(DatabaseGeneratedOption.None)]
+    [Column(TypeName = "CHAR(5)")]
+    [MaxLength(5, ErrorMessage = "Ticket Type Id should not have more than 5 characters")]
+    public string? TicketTypeId { get; set; }
 
-        [Required(ErrorMessage = "Ticket Type Name is required")]
-        [MaxLength(100, ErrorMessage = "Type Name cannot exceed 100 characters")]
-        [Display(Name = "Ticket Type Name")]
-        public string TicketTypeName { get; set; } = null!;
+    [Required(ErrorMessage = "Ticket Type Name should not be empty")]
+    [Column(TypeName = "VARCHAR(100)")]
+    [MaxLength(100, ErrorMessage = "Ticket Type Name cannot have more than 100 characters")]
+    public string? TicketTypeName { get; set; }
 
-        [MaxLength(500, ErrorMessage = "Description cannot exceed 500 characters")]
-        [Display(Name = "Type Description")] 
-        public string? Description { get; set; }
+    [Column(TypeName = "VARCHAR(500)")]
+    [MaxLength(500, ErrorMessage = "Description cannot have more than 500 characters")]
+    public string? Description { get; set; }
 
-        public virtual ICollection<Sla> Slas { get; set; } = new List<Sla>();
-        public virtual ICollection<Ticket> Tickets { get; set; } = new List<Ticket>();
-    }
+    public virtual ICollection<Sla> Slas { get; set; } = new List<Sla>();
+    public virtual ICollection<Ticket> Tickets { get; set; } = new List<Ticket>();
 }
