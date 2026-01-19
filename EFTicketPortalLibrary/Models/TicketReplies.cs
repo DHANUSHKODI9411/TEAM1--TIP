@@ -34,8 +34,6 @@ public class TicketReplies
 
     [MaxLength(5, ErrorMessage = "Ticket Id must be exactly 5 characters only.")]
 
-    [ForeignKey("Ticket")]
-
     public string? TicketId { get; set; } = null!;
 
 
@@ -76,13 +74,28 @@ public class TicketReplies
 
     public DateTime RepliedDate { get; set;}
 
-
-
-
+[ForeignKey(nameof(TicketId))]
+    [InverseProperty("Replies")]
     public virtual Ticket Ticket { get; set; } = null!;
+<<<<<<< HEAD
     [ForeignKey("CreatedEmployeeId")]
     public virtual Employee CreatedEmployee { get; set; } = null!;
     [ForeignKey("AssignedEmployeeId")]
     public virtual Employee AssignedEmployee { get; set; } = null!;
- 
+=======
+
+    [ForeignKey(nameof(CreatedEmployeeId))]
+    [InverseProperty("CreatedEmpReplies")]
+    public virtual Employee CreatedEmployee { get; set; } = null!;
+
+    [ForeignKey(nameof(AssignedEmployeeId))]
+    [InverseProperty("AssignedEmpReplies")]
+    public virtual Employee? AssignedEmployee { get; set; }
 }
+
+
+>>>>>>> ee80a03c557fd579b88b8184b3b849a7c8184432
+ 
+
+ 
+

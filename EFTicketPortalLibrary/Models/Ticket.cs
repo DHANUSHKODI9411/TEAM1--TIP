@@ -31,7 +31,6 @@ public class Ticket
     [Required(ErrorMessage = "Employee Id is required.")]
     [Column(TypeName = "char(5)")]
     [StringLength(5, ErrorMessage = "Employee Id must be exactly 5 characters.")]
-    [ForeignKey ("Employee")]
     public string CreatedEmployeeId { get; set; } = null!;
 
 
@@ -39,7 +38,6 @@ public class Ticket
     [Required(ErrorMessage = "Ticket Type Id is required.")]
     [Column(TypeName = "char(5)")]
     [StringLength(5, ErrorMessage = "Ticket Type Id must be exactly 5 characters.")]
-    [ForeignKey("TicketType")]
     public string TicketTypeId { get; set; } = null!;
 
 
@@ -47,24 +45,32 @@ public class Ticket
     [Required(ErrorMessage = "Status Id is required.")]
     [Column(TypeName = "char(5)")]
     [StringLength(5, ErrorMessage = "Status Id must be exactly 5 characters.")]
-    [ForeignKey("Status")]
     public string StatusId { get; set; } = null!;
 
 
 
     [Column(TypeName = "char(5)")]
     [StringLength(5, ErrorMessage = "Assigned Employee Id must be exactly 5 characters.")]
-    [ForeignKey ("Employee")]
     public string? AssignedEmployeeId { get; set; }
 
 
-    public virtual Employee Employee { get; set; } = null!;
+     [ForeignKey(nameof(CreatedEmployeeId))]
+    [InverseProperty("CreatedTickets")]
+    public virtual Employee Employee { get; set; }
 
-    public virtual Employee? AssignedEmployeeID { get; set; }
+    [ForeignKey(nameof(AssignedEmployeeId))]
+    [InverseProperty("AssignedTickets")] 
+    public virtual Employee? AssignedEmployee { get; set; }
 
-    public virtual TicketType TicketType { get; set; } = null!;
+    [ForeignKey(nameof(TicketTypeId))]
+    [InverseProperty("Tickets")] 
+    public virtual TicketType TicketType { get; set; } 
 
-    public virtual Status Status { get; set; } = null!;
+    [ForeignKey(nameof(StatusId))]
+    [InverseProperty("Tickets")] 
+    public virtual Status Status { get; set; }
 
-    public virtual ICollection<TicketReplies>? Replies { get; set; }
+    
+    [InverseProperty("Ticket")] 
+    public virtual ICollection<TicketReplies> Replies { get; set; } = new List<TicketReplies>();
 }

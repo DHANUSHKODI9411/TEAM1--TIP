@@ -18,7 +18,15 @@ build_property._SupportedPlatformList = Linux,macOS,Windows
 build_property.TargetFrameworkIdentifier = .NETCoreApp
 build_property.TargetFrameworkVersion = v10.0
 build_property.RootNamespace = EFTicketPortalLibrary
-build_property.ProjectDir = C:\Users\CR381GR\OneDrive - EY\Desktop\Project\TEAM1--TIP\EFTicketPortalLibrary\
+<<<<<<< HEAD
+build_property.ProjectDir = C:\Users\FQ525AM\OneDrive - EY\Desktop\github project\TEAM1--TIP\EFTicketPortalLibrary\
+=======
+<<<<<<< HEAD
+build_property.ProjectDir = C:\Users\FQ888LQ\OneDrive - EY\Desktop\TIP\TEAM1--TIP\EFTicketPortalLibrary\
+=======
+build_property.ProjectDir = C:\Users\user1\Ticket Portal\TEAM1--TIP\EFTicketPortalLibrary\
+>>>>>>> 4c651eefdabd5e4f5a167fde8e86bc8bb5e80a47
+>>>>>>> a21fb2d698422efe4ba01fc20db5f2c1d69a472c
 build_property.EnableComHosting = 
 build_property.EnableGeneratedComInterfaceComImportInterop = 
 build_property.EffectiveAnalysisLevelStyle = 10.0
