@@ -94,8 +94,4 @@ public class TicketReplies
 public virtual ICollection<TicketReplies>? Replies { get; set; }
  
 
- 
-
- 
-
 }
