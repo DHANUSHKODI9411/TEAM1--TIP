@@ -1,5 +1,4 @@
 using System;
-
 using EFTicketPortalLibrary.Models;
 using Microsoft.EntityFrameworkCore;
 
@@ -8,6 +7,7 @@ namespace EFTicketPortalLibrary.Repos;
 public class TicketRepository : ITicketRepository
 {
     private readonly TicketPortalDbContext _context = new();
+
 
     public async Task CreateTicketAsync(Ticket ticket)
     {
@@ -47,6 +47,7 @@ public class TicketRepository : ITicketRepository
     public async Task DeleteTicketAsync(string ticketId)
     {
         var ticket = await _context.Tickets
+            .Include(t => t.Replies)
             .FirstOrDefaultAsync(t => t.TicketId == ticketId);
 
         if (ticket == null)
@@ -54,13 +55,25 @@ public class TicketRepository : ITicketRepository
             throw new TicketException("Ticket not found.", 404);
         }
 
+        if (ticket.Replies.Any())
+        {
+            throw new TicketException(
+                "Cannot delete ticket. Delete all ticket replies first.", 409);
+        }
+
         _context.Tickets.Remove(ticket);
         await _context.SaveChangesAsync();
     }
 
+
     public async Task<Ticket> GetTicketByIdAsync(string ticketId)
     {
         var ticket = await _context.Tickets
+            .Include(t => t.Employee)
+            .Include(t => t.AssignedEmployee)
+            .Include(t => t.TicketType)
+            .Include(t => t.Status)
+            .Include(t => t.Replies)
             .FirstOrDefaultAsync(t => t.TicketId == ticketId);
 
         if (ticket == null)
@@ -71,15 +84,17 @@ public class TicketRepository : ITicketRepository
         return ticket;
     }
 
+
     public async Task<IEnumerable<Ticket>> GetAllTicketsAsync()
     {
         return await _context.Tickets.ToListAsync();
     }
 
-    public async Task<IEnumerable<Ticket>> GetByEmployeeIdAsync(string employeeId)
+
+    public async Task<IEnumerable<Ticket>> GetByCreatedEmployeeIdAsync(string createdEmployeeId)
     {
         return await _context.Tickets
-            .Where(t => t.EmployeeId == employeeId)
+            .Where(t => t.CreatedEmployeeId == createdEmployeeId)
             .ToListAsync();
     }
 
@@ -104,4 +119,3 @@ public class TicketRepository : ITicketRepository
             .ToListAsync();
     }
 }
-
