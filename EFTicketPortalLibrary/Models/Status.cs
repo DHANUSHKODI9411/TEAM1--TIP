@@ -22,9 +22,8 @@ public class Status
     [MaxLength(100, ErrorMessage = "Description cannot have more than 100 characters")]
     public string? Description { get; set; }
 
-    [Required(ErrorMessage="Select active status")]
-    [Column(TypeName = "VARCHAR(10)")]
-    public string? IsActive { get; set; }
+    [Required, Column(TypeName = "BIT")]
+    public bool IsActive { get; set; } = true;
 
     public virtual ICollection<Ticket> Tickets { get; set; } = new List<Ticket>();
 
