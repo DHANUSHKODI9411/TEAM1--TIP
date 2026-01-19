@@ -22,7 +22,7 @@ public class StatusRepository : IStatusRepository
             switch (errorNumber)
             {
                 case 2627:
-                case 2601:  // Unique constraint violation for StatusId or StatusName
+                case 2601: 
                     throw new TicketException("Status ID or Name already exists", 501);
                 default:
                     throw new TicketException(sqlException.Message, 599);
@@ -50,7 +50,7 @@ public class StatusRepository : IStatusRepository
 
     public async Task<List<Status>> GetAllStatusesAsync()
     {
-        List<Statuses> status = await context.Statuses.ToListAsync();
+        List<Status> status = await context.Statuses.ToListAsync();
         return status;
     }
 
