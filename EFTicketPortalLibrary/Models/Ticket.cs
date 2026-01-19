@@ -31,7 +31,7 @@ public class Ticket
     [Required(ErrorMessage = "Employee Id is required.")]
     [Column(TypeName = "char(5)")]
     [StringLength(5, ErrorMessage = "Employee Id must be exactly 5 characters.")]
-    public string EmployeeId { get; set; } = null!;
+    public string CreatedEmployeeId { get; set; } = null!;
 
 
 
@@ -54,16 +54,23 @@ public class Ticket
     public string? AssignedEmployeeId { get; set; }
 
 
- 
-    [ForeignKey(nameof(EmployeeId))]
-    public Employee Employee { get; set; } = null!;
+     [ForeignKey(nameof(CreatedEmployeeId))]
+    [InverseProperty("CreatedTickets")]
+    public virtual Employee Employee { get; set; }
 
     [ForeignKey(nameof(AssignedEmployeeId))]
-    public Employee? AssignedEmployee { get; set; }
+    [InverseProperty("AssignedTickets")] 
+    public virtual Employee? AssignedEmployee { get; set; }
 
     [ForeignKey(nameof(TicketTypeId))]
-    public TicketType TicketType { get; set; } = null!;
+    [InverseProperty("Tickets")] 
+    public virtual TicketType TicketType { get; set; } 
 
     [ForeignKey(nameof(StatusId))]
-    public Status Status { get; set; } = null!;
+    [InverseProperty("Tickets")] 
+    public virtual Status Status { get; set; }
+
+    
+    [InverseProperty("Ticket")] 
+    public virtual ICollection<TicketReplies> Replies { get; set; } = new List<TicketReplies>();
 }
