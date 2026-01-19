@@ -62,7 +62,7 @@ public class Ticket
 
     public virtual Employee? AssignedEmployeeID { get; set; }
 
-    public virtual TicketType TicketTypeId { get; set; } = null!;
+    public virtual TicketType TicketType { get; set; } = null!;
 
     public virtual Status Status { get; set; } = null!;
 }
