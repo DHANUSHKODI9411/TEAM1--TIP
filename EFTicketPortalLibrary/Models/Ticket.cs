@@ -15,12 +15,14 @@ public class Ticket
 
 
     [Required(ErrorMessage = "Title is required.")]
+    [Column(TypeName = "VARCHAR(200)")]
     [MaxLength(200, ErrorMessage = "Title cannot exceed 200 characters.")]
     public string Title { get; set; } = null!;
 
 
 
     [Required(ErrorMessage = "Description is required.")]
+    [Column(TypeName = "VARCHAR(4000)")]
     [MaxLength(4000, ErrorMessage = "Description cannot exceed 4000 characters.")]
     public string Description { get; set; } = null!;
 
