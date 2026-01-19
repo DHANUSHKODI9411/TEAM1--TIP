@@ -26,4 +26,6 @@ public class Status
     [Column(TypeName = "VARCHAR(10)")]
     public string? IsActive { get; set; }
 
+    public virtual ICollection<Ticket> Tickets { get; set; } = new List<Ticket>();
+
 }
