@@ -3,9 +3,9 @@ using EFTicketPortalLibrary.Models;
 
 namespace EFTicketPortalLibrary.Repos;
 
-public interface TicketRepliesRepository
+public interface ITicketRepliesRepository
 {
-    Task<IEnumerable<TicketReplies>> GetAllRepliesAsync();
+        Task<TicketReplies> GetAllRepliesAsync();
 
         Task<TicketReplies?> GetReplyByIdAsync(string replyId);
 
@@ -17,6 +17,5 @@ public interface TicketRepliesRepository
 
         Task DeleteReplyAsync(string replyId);
 
-        Task SaveAsync();
     
 }

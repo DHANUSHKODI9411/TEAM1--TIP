@@ -48,13 +48,9 @@ public class TicketReplies
 
     [MaxLength(5, ErrorMessage = "Employee Id must be exactly 5 characters only.")]
 
-    [ForeignKey("Employee")]
-
     public string? CreatedEmployeeId { get; set;} = null!;
 
 
-
- 
 
     [Column(TypeName = "char(5)")]
 
@@ -62,7 +58,6 @@ public class TicketReplies
 
     [MaxLength(5, ErrorMessage = "AssignedEmployee Id must be exactly 5 characters only.")]
 
-    [ForeignKey("Employee")]
 
     public string? AssignedEmployeeId {get; set;} = null!;
 
@@ -77,8 +72,6 @@ public class TicketReplies
     public string? ReplyText { get; set;} = null!;
 
 
- 
-
     [Required(ErrorMessage = "Please select the date...")]
 
     public DateTime RepliedDate { get; set;}
@@ -87,7 +80,9 @@ public class TicketReplies
 
 
     public virtual Ticket Ticket { get; set; } = null!;
+    [ForeignKey("CreatedEmployeeId")]
     public virtual Employee CreatedEmployee { get; set; } = null!;
+    [ForeignKey("AssignedEmployeeId")]
     public virtual Employee AssignedEmployee { get; set; } = null!;
  
 }
