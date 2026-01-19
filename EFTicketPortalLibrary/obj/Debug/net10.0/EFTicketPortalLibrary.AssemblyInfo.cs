@@ -13,11 +13,7 @@ using System.Reflection;
 [assembly: System.Reflection.AssemblyCompanyAttribute("EFTicketPortalLibrary")]
 [assembly: System.Reflection.AssemblyConfigurationAttribute("Debug")]
 [assembly: System.Reflection.AssemblyFileVersionAttribute("1.0.0.0")]
-<<<<<<< HEAD
-[assembly: System.Reflection.AssemblyInformationalVersionAttribute("1.0.0+b8e0745f7047c40320b16d13845d26df0b765579")]
-=======
-[assembly: System.Reflection.AssemblyInformationalVersionAttribute("1.0.0+1340840e00e7c1d52f28d4f523304a8f1ca49cc1")]
->>>>>>> 45a08da03312af475d7f4fb119050977cbc1ecd3
+[assembly: System.Reflection.AssemblyInformationalVersionAttribute("1.0.0+bbdf25e88906e6768c489a529c3b59eb6dd0870f")]
 [assembly: System.Reflection.AssemblyProductAttribute("EFTicketPortalLibrary")]
 [assembly: System.Reflection.AssemblyTitleAttribute("EFTicketPortalLibrary")]
 [assembly: System.Reflection.AssemblyVersionAttribute("1.0.0.0")]
