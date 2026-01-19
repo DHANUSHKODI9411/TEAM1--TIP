@@ -39,5 +39,15 @@
     "C:\\Users\\FQ888LQ\\.nuget\\packages\\system.composition.runtime\\9.0.0\\system.composition.runtime.9.0.0.nupkg.sha512",
     "C:\\Users\\FQ888LQ\\.nuget\\packages\\system.composition.typedparts\\9.0.0\\system.composition.typedparts.9.0.0.nupkg.sha512"
   ],
-  "logs": []
+  "logs": [
+    {
+      "code": "Undefined",
+      "level": "Warning",
+      "message": "Problem reading the cache file C:\\Users\\FQ888LQ\\OneDrive - EY\\Desktop\\TIP\\TEAM1--TIP\\EFTicketPortalLibrary\\obj\\project.nuget.cache : '<' is an invalid start of a property name. Expected a '\"'. Path: $ | LineNumber: 2 | BytePositionInLine: 0.",
+      "projectPath": "C:\\Users\\FQ888LQ\\OneDrive - EY\\Desktop\\TIP\\TEAM1--TIP\\EFTicketPortalLibrary\\EFTicketPortalLibrary.csproj",
+      "warningLevel": 1,
+      "filePath": "C:\\Users\\FQ888LQ\\OneDrive - EY\\Desktop\\TIP\\TEAM1--TIP\\EFTicketPortalLibrary\\EFTicketPortalLibrary.csproj",
+      "targetGraphs": []
+    }
+  ]
 }
