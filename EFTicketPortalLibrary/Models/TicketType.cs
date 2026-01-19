@@ -23,6 +23,6 @@ public class TicketType
     [MaxLength(500, ErrorMessage = "Description cannot have more than 500 characters")]
     public string? Description { get; set; }
 
-    public virtual ICollection<Sla> Slas { get; set; } = new List<Sla>();
+    public virtual ICollection<SLA> Slas { get; set; } = new List<SLA>();
     public virtual ICollection<Ticket> Tickets { get; set; } = new List<Ticket>();
 }

@@ -1,20 +1,20 @@
 {
   "format": 1,
   "restore": {
-    "C:\\Users\\user1\\Ticket Portal\\TEAM1--TIP\\EFTicketPortalLibrary\\EFTicketPortalLibrary.csproj": {}
+    "C:\\Users\\YM685SU\\OneDrive - EY\\Desktop\\project\\TEAM1--TIP\\EFTicketPortalLibrary\\EFTicketPortalLibrary.csproj": {}
   },
   "projects": {
-    "C:\\Users\\user1\\Ticket Portal\\TEAM1--TIP\\EFTicketPortalLibrary\\EFTicketPortalLibrary.csproj": {
+    "C:\\Users\\YM685SU\\OneDrive - EY\\Desktop\\project\\TEAM1--TIP\\EFTicketPortalLibrary\\EFTicketPortalLibrary.csproj": {
       "version": "1.0.0",
       "restore": {
-        "projectUniqueName": "C:\\Users\\user1\\Ticket Portal\\TEAM1--TIP\\EFTicketPortalLibrary\\EFTicketPortalLibrary.csproj",
+        "projectUniqueName": "C:\\Users\\YM685SU\\OneDrive - EY\\Desktop\\project\\TEAM1--TIP\\EFTicketPortalLibrary\\EFTicketPortalLibrary.csproj",
         "projectName": "EFTicketPortalLibrary",
-        "projectPath": "C:\\Users\\user1\\Ticket Portal\\TEAM1--TIP\\EFTicketPortalLibrary\\EFTicketPortalLibrary.csproj",
-        "packagesPath": "C:\\Users\\user1\\.nuget\\packages\\",
-        "outputPath": "C:\\Users\\user1\\Ticket Portal\\TEAM1--TIP\\EFTicketPortalLibrary\\obj\\",
+        "projectPath": "C:\\Users\\YM685SU\\OneDrive - EY\\Desktop\\project\\TEAM1--TIP\\EFTicketPortalLibrary\\EFTicketPortalLibrary.csproj",
+        "packagesPath": "C:\\Users\\YM685SU\\.nuget\\packages\\",
+        "outputPath": "C:\\Users\\YM685SU\\OneDrive - EY\\Desktop\\project\\TEAM1--TIP\\EFTicketPortalLibrary\\obj\\",
         "projectStyle": "PackageReference",
         "configFilePaths": [
-          "C:\\Users\\user1\\AppData\\Roaming\\NuGet\\NuGet.Config"
+          "C:\\Users\\YM685SU\\AppData\\Roaming\\NuGet\\NuGet.Config"
         ],
         "originalTargetFrameworks": [
           "net10.0"
@@ -67,7 +67,7 @@
               "privateAssets": "all"
             }
           },
-          "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\10.0.100/PortableRuntimeIdentifierGraph.json",
+          "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\10.0.101/PortableRuntimeIdentifierGraph.json",
           "packagesToPrune": {
             "Microsoft.CSharp": "(,4.7.32767]",
             "Microsoft.VisualBasic": "(,10.4.32767]",
