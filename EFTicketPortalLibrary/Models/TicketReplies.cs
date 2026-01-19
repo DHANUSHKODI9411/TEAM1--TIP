@@ -90,4 +90,15 @@ public class TicketReplies
     public virtual Employee CreatedEmployee { get; set; } = null!;
     public virtual Employee AssignedEmployee { get; set; } = null!;
  
+<<<<<<< HEAD
+
+    public virtual Employee? Employee { get; set;}
+
+
+ 
+public virtual ICollection<TicketReplies>? Replies { get; set; }
+ 
+
+=======
+>>>>>>> fe0cda9efc18de219eedcb075e84f6ef03ea00d2
 }

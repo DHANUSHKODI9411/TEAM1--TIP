@@ -65,4 +65,6 @@ public class Ticket
     public virtual TicketType TicketType { get; set; } = null!;
 
     public virtual Status Status { get; set; } = null!;
+
+    public virtual ICollection<TicketReplies>? Replies { get; set; }
 }
