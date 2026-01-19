@@ -1,2 +1,7 @@
 <Solution>
-</Solution>
+</solution>
+    <Project>
+        <Name>Ticket Portal Library</Name>
+        <Path>Ticket Portal Library\Ticket Portal Library.csproj</Path>
+        <Type>CSharp</Type>
+    </Project>
