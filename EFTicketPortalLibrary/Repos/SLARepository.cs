@@ -1,11 +1,6 @@
-using EFTicketPortalLibrary.Data;
 using EFTicketPortalLibrary.Models;
 using Microsoft.EntityFrameworkCore;
-using Microsoft.Data.SqlClient;
-using System.Collections.Generic;
-using System.Threading.Tasks;
 using System;
-using EFTicketPortalLibrary.Repositories;
 
 namespace EFTicketPortalLibrary.Repositories
 {
@@ -121,5 +116,9 @@ namespace EFTicketPortalLibrary.Repositories
                 throw new Exception("Error deleting SLA.");
             }
         }
+    }
+
+    internal class AppDbContext
+    {
     }
 }
