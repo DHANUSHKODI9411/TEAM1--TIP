@@ -62,7 +62,7 @@ public class TicketReplies
 
     [MaxLength(5, ErrorMessage = "AssignedEmployee Id must be exactly 5 characters only.")]
 
-    [ForeignKey("Ticket")]
+    [ForeignKey("Employee")]
 
     public string? AssignedEmployeeId {get; set;}
 
@@ -77,9 +77,6 @@ public class TicketReplies
     public string? ReplyText { get; set;}
 
 
-
- 
-
  
 
     [Required(ErrorMessage = "Please select the date...")]
@@ -92,10 +89,10 @@ public class TicketReplies
 
     public virtual Employee? Employee { get; set;}
 
-    public virtual Employee? AssignedEmployeeId { get; set;}
+    public virtual Employee? Employee { get; set;}
 
  
-
+public virtual ICollection<TicketReplies>? Replies { get; set; }
  
 
  

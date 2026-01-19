@@ -31,13 +31,15 @@ public class Ticket
     [Required(ErrorMessage = "Employee Id is required.")]
     [Column(TypeName = "char(5)")]
     [StringLength(5, ErrorMessage = "Employee Id must be exactly 5 characters.")]
-    public string EmployeeId { get; set; } = null!;
+    [ForeignKey ("Employee")]
+    public string CreatedEmployeeId { get; set; } = null!;
 
 
 
     [Required(ErrorMessage = "Ticket Type Id is required.")]
     [Column(TypeName = "char(5)")]
     [StringLength(5, ErrorMessage = "Ticket Type Id must be exactly 5 characters.")]
+    [ForeignKey("TicketType")]
     public string TicketTypeId { get; set; } = null!;
 
 
@@ -45,25 +47,22 @@ public class Ticket
     [Required(ErrorMessage = "Status Id is required.")]
     [Column(TypeName = "char(5)")]
     [StringLength(5, ErrorMessage = "Status Id must be exactly 5 characters.")]
+    [ForeignKey("Status")]
     public string StatusId { get; set; } = null!;
 
 
 
     [Column(TypeName = "char(5)")]
     [StringLength(5, ErrorMessage = "Assigned Employee Id must be exactly 5 characters.")]
+    [ForeignKey ("Employee")]
     public string? AssignedEmployeeId { get; set; }
 
 
- 
-    [ForeignKey(nameof(EmployeeId))]
-    public Employee Employee { get; set; } = null!;
+    public virtual Employee Employee { get; set; } = null!;
 
-    [ForeignKey(nameof(AssignedEmployeeId))]
-    public Employee? AssignedEmployee { get; set; }
+    public virtual Employee? AssignedEmployeeID { get; set; }
 
-    [ForeignKey(nameof(TicketTypeId))]
-    public TicketType TicketType { get; set; } = null!;
+    public virtual TicketType TicketTypeId { get; set; } = null!;
 
-    [ForeignKey(nameof(StatusId))]
-    public Status Status { get; set; } = null!;
+    public virtual Status Status { get; set; } = null!;
 }
