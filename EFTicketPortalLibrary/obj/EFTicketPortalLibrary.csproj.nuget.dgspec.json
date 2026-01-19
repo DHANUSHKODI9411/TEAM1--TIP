@@ -1,23 +1,23 @@
 {
   "format": 1,
   "restore": {
-    "C:\\Users\\FQ888LQ\\OneDrive - EY\\Desktop\\TIP\\TEAM1--TIP\\EFTicketPortalLibrary\\EFTicketPortalLibrary.csproj": {}
+    "C:\\Users\\CR381GR\\OneDrive - EY\\Desktop\\Project\\TEAM1--TIP\\EFTicketPortalLibrary\\EFTicketPortalLibrary.csproj": {}
   },
   "projects": {
-    "C:\\Users\\FQ888LQ\\OneDrive - EY\\Desktop\\TIP\\TEAM1--TIP\\EFTicketPortalLibrary\\EFTicketPortalLibrary.csproj": {
+    "C:\\Users\\CR381GR\\OneDrive - EY\\Desktop\\Project\\TEAM1--TIP\\EFTicketPortalLibrary\\EFTicketPortalLibrary.csproj": {
       "version": "1.0.0",
       "restore": {
-        "projectUniqueName": "C:\\Users\\FQ888LQ\\OneDrive - EY\\Desktop\\TIP\\TEAM1--TIP\\EFTicketPortalLibrary\\EFTicketPortalLibrary.csproj",
+        "projectUniqueName": "C:\\Users\\CR381GR\\OneDrive - EY\\Desktop\\Project\\TEAM1--TIP\\EFTicketPortalLibrary\\EFTicketPortalLibrary.csproj",
         "projectName": "EFTicketPortalLibrary",
-        "projectPath": "C:\\Users\\FQ888LQ\\OneDrive - EY\\Desktop\\TIP\\TEAM1--TIP\\EFTicketPortalLibrary\\EFTicketPortalLibrary.csproj",
-        "packagesPath": "C:\\Users\\FQ888LQ\\.nuget\\packages\\",
-        "outputPath": "C:\\Users\\FQ888LQ\\OneDrive - EY\\Desktop\\TIP\\TEAM1--TIP\\EFTicketPortalLibrary\\obj\\",
+        "projectPath": "C:\\Users\\CR381GR\\OneDrive - EY\\Desktop\\Project\\TEAM1--TIP\\EFTicketPortalLibrary\\EFTicketPortalLibrary.csproj",
+        "packagesPath": "C:\\Users\\CR381GR\\.nuget\\packages\\",
+        "outputPath": "C:\\Users\\CR381GR\\OneDrive - EY\\Desktop\\Project\\TEAM1--TIP\\EFTicketPortalLibrary\\obj\\",
         "projectStyle": "PackageReference",
         "fallbackFolders": [
           "C:\\Program Files (x86)\\Microsoft Visual Studio\\Shared\\NuGetPackages"
         ],
         "configFilePaths": [
-          "C:\\Users\\FQ888LQ\\AppData\\Roaming\\NuGet\\NuGet.Config",
+          "C:\\Users\\CR381GR\\AppData\\Roaming\\NuGet\\NuGet.Config",
           "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.FallbackLocation.config",
           "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.Offline.config"
         ],
@@ -26,6 +26,7 @@
         ],
         "sources": {
           "C:\\Program Files (x86)\\Microsoft SDKs\\NuGetPackages\\": {},
+          "C:\\Program Files\\dotnet\\library-packs": {},
           "https://api.nuget.org/v3/index.json": {}
         },
         "frameworks": {
@@ -65,7 +66,7 @@
               "privateAssets": "all"
             }
           },
-          "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\10.0.100/PortableRuntimeIdentifierGraph.json",
+          "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\10.0.101/PortableRuntimeIdentifierGraph.json",
           "packagesToPrune": {
             "Microsoft.CSharp": "(,4.7.32767]",
             "Microsoft.VisualBasic": "(,10.4.32767]",
