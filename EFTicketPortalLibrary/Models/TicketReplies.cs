@@ -22,7 +22,7 @@ public class TicketReplies
 
     [MaxLength(5, ErrorMessage = "Reply Id must be exactly 5 characters only.")]
 
-    public string? ReplyId { get; set;}
+    public string? ReplyId { get; set;} = null!;
 
 
 
@@ -36,7 +36,7 @@ public class TicketReplies
 
     [ForeignKey("Ticket")]
 
-    public string? TicketId { get; set; }
+    public string? TicketId { get; set; } = null!;
 
 
 
@@ -50,7 +50,7 @@ public class TicketReplies
 
     [ForeignKey("Employee")]
 
-    public string? CreatedEmployeeId { get; set;}
+    public string? CreatedEmployeeId { get; set;} = null!;
 
 
 
@@ -64,7 +64,7 @@ public class TicketReplies
 
     [ForeignKey("Employee")]
 
-    public string? AssignedEmployeeId {get; set;}
+    public string? AssignedEmployeeId {get; set;} = null!;
 
 
 
@@ -74,7 +74,7 @@ public class TicketReplies
 
     [Required(ErrorMessage = "Please reply for the text...")]
 
-    public string? ReplyText { get; set;}
+    public string? ReplyText { get; set;} = null!;
 
 
  
@@ -85,7 +85,12 @@ public class TicketReplies
 
 
 
+
+    public virtual Ticket Ticket { get; set; } = null!;
+    public virtual Employee CreatedEmployee { get; set; } = null!;
+    public virtual Employee AssignedEmployee { get; set; } = null!;
  
+<<<<<<< HEAD
 
     public virtual Employee? Employee { get; set;}
 
@@ -94,8 +99,6 @@ public class TicketReplies
 public virtual ICollection<TicketReplies>? Replies { get; set; }
  
 
- 
-
- 
-
+=======
+>>>>>>> fe0cda9efc18de219eedcb075e84f6ef03ea00d2
 }
