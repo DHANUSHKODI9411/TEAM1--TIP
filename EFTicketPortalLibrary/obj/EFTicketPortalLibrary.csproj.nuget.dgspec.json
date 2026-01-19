@@ -1,25 +1,32 @@
 {
   "format": 1,
   "restore": {
-    "C:\\Users\\user1\\New folder\\TEAM1--TIP\\EFTicketPortalLibrary\\EFTicketPortalLibrary.csproj": {}
+    "C:\\Users\\FQ525AM\\OneDrive - EY\\Desktop\\github project\\TEAM1--TIP\\EFTicketPortalLibrary\\EFTicketPortalLibrary.csproj": {}
   },
   "projects": {
-    "C:\\Users\\user1\\New folder\\TEAM1--TIP\\EFTicketPortalLibrary\\EFTicketPortalLibrary.csproj": {
+    "C:\\Users\\FQ525AM\\OneDrive - EY\\Desktop\\github project\\TEAM1--TIP\\EFTicketPortalLibrary\\EFTicketPortalLibrary.csproj": {
       "version": "1.0.0",
       "restore": {
-        "projectUniqueName": "C:\\Users\\user1\\New folder\\TEAM1--TIP\\EFTicketPortalLibrary\\EFTicketPortalLibrary.csproj",
+        "projectUniqueName": "C:\\Users\\FQ525AM\\OneDrive - EY\\Desktop\\github project\\TEAM1--TIP\\EFTicketPortalLibrary\\EFTicketPortalLibrary.csproj",
         "projectName": "EFTicketPortalLibrary",
-        "projectPath": "C:\\Users\\user1\\New folder\\TEAM1--TIP\\EFTicketPortalLibrary\\EFTicketPortalLibrary.csproj",
-        "packagesPath": "C:\\Users\\user1\\.nuget\\packages\\",
-        "outputPath": "C:\\Users\\user1\\New folder\\TEAM1--TIP\\EFTicketPortalLibrary\\obj\\",
+        "projectPath": "C:\\Users\\FQ525AM\\OneDrive - EY\\Desktop\\github project\\TEAM1--TIP\\EFTicketPortalLibrary\\EFTicketPortalLibrary.csproj",
+        "packagesPath": "C:\\Users\\FQ525AM\\.nuget\\packages\\",
+        "outputPath": "C:\\Users\\FQ525AM\\OneDrive - EY\\Desktop\\github project\\TEAM1--TIP\\EFTicketPortalLibrary\\obj\\",
         "projectStyle": "PackageReference",
+        "fallbackFolders": [
+          "C:\\Program Files (x86)\\Microsoft Visual Studio\\Shared\\NuGetPackages"
+        ],
         "configFilePaths": [
-          "C:\\Users\\user1\\AppData\\Roaming\\NuGet\\NuGet.Config"
+          "C:\\Users\\FQ525AM\\AppData\\Roaming\\NuGet\\NuGet.Config",
+          "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.FallbackLocation.config",
+          "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.Offline.config"
         ],
         "originalTargetFrameworks": [
           "net10.0"
         ],
         "sources": {
+          "C:\\Program Files (x86)\\Microsoft SDKs\\NuGetPackages\\": {},
+          "C:\\Program Files\\dotnet\\library-packs": {},
           "https://api.nuget.org/v3/index.json": {}
         },
         "frameworks": {
@@ -43,6 +50,14 @@
       "frameworks": {
         "net10.0": {
           "targetAlias": "net10.0",
+          "dependencies": {
+            "Microsoft.EntityFrameworkCore.Tools": {
+              "include": "Runtime, Build, Native, ContentFiles, Analyzers, BuildTransitive",
+              "suppressParent": "All",
+              "target": "Package",
+              "version": "[10.0.2, )"
+            }
+          },
           "imports": [
             "net461",
             "net462",
