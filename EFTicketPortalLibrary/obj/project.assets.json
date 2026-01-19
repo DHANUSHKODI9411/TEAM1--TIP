@@ -3658,32 +3658,74 @@
     ]
   },
   "packageFolders": {
+<<<<<<< HEAD
     "C:\\Users\\FQ525AM\\.nuget\\packages\\": {},
     "C:\\Program Files (x86)\\Microsoft Visual Studio\\Shared\\NuGetPackages": {}
+=======
+<<<<<<< HEAD
+    "C:\\Users\\FQ888LQ\\.nuget\\packages\\": {},
+    "C:\\Program Files (x86)\\Microsoft Visual Studio\\Shared\\NuGetPackages": {}
+=======
+    "C:\\Users\\user1\\.nuget\\packages\\": {}
+>>>>>>> 4c651eefdabd5e4f5a167fde8e86bc8bb5e80a47
+>>>>>>> a21fb2d698422efe4ba01fc20db5f2c1d69a472c
   },
   "project": {
     "version": "1.0.0",
     "restore": {
+<<<<<<< HEAD
       "projectUniqueName": "C:\\Users\\FQ525AM\\OneDrive - EY\\Desktop\\github project\\TEAM1--TIP\\EFTicketPortalLibrary\\EFTicketPortalLibrary.csproj",
       "projectName": "EFTicketPortalLibrary",
       "projectPath": "C:\\Users\\FQ525AM\\OneDrive - EY\\Desktop\\github project\\TEAM1--TIP\\EFTicketPortalLibrary\\EFTicketPortalLibrary.csproj",
       "packagesPath": "C:\\Users\\FQ525AM\\.nuget\\packages\\",
       "outputPath": "C:\\Users\\FQ525AM\\OneDrive - EY\\Desktop\\github project\\TEAM1--TIP\\EFTicketPortalLibrary\\obj\\",
+=======
+<<<<<<< HEAD
+      "projectUniqueName": "C:\\Users\\FQ888LQ\\OneDrive - EY\\Desktop\\TIP\\TEAM1--TIP\\EFTicketPortalLibrary\\EFTicketPortalLibrary.csproj",
+      "projectName": "EFTicketPortalLibrary",
+      "projectPath": "C:\\Users\\FQ888LQ\\OneDrive - EY\\Desktop\\TIP\\TEAM1--TIP\\EFTicketPortalLibrary\\EFTicketPortalLibrary.csproj",
+      "packagesPath": "C:\\Users\\FQ888LQ\\.nuget\\packages\\",
+      "outputPath": "C:\\Users\\FQ888LQ\\OneDrive - EY\\Desktop\\TIP\\TEAM1--TIP\\EFTicketPortalLibrary\\obj\\",
+=======
+      "projectUniqueName": "C:\\Users\\user1\\Ticket Portal\\TEAM1--TIP\\EFTicketPortalLibrary\\EFTicketPortalLibrary.csproj",
+      "projectName": "EFTicketPortalLibrary",
+      "projectPath": "C:\\Users\\user1\\Ticket Portal\\TEAM1--TIP\\EFTicketPortalLibrary\\EFTicketPortalLibrary.csproj",
+      "packagesPath": "C:\\Users\\user1\\.nuget\\packages\\",
+      "outputPath": "C:\\Users\\user1\\Ticket Portal\\TEAM1--TIP\\EFTicketPortalLibrary\\obj\\",
+>>>>>>> 4c651eefdabd5e4f5a167fde8e86bc8bb5e80a47
+>>>>>>> a21fb2d698422efe4ba01fc20db5f2c1d69a472c
       "projectStyle": "PackageReference",
       "fallbackFolders": [
         "C:\\Program Files (x86)\\Microsoft Visual Studio\\Shared\\NuGetPackages"
       ],
       "configFilePaths": [
+<<<<<<< HEAD
         "C:\\Users\\FQ525AM\\AppData\\Roaming\\NuGet\\NuGet.Config",
         "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.FallbackLocation.config",
         "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.Offline.config"
+=======
+<<<<<<< HEAD
+        "C:\\Users\\FQ888LQ\\AppData\\Roaming\\NuGet\\NuGet.Config",
+        "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.FallbackLocation.config",
+        "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.Offline.config"
+=======
+        "C:\\Users\\user1\\AppData\\Roaming\\NuGet\\NuGet.Config"
+>>>>>>> 4c651eefdabd5e4f5a167fde8e86bc8bb5e80a47
+>>>>>>> a21fb2d698422efe4ba01fc20db5f2c1d69a472c
       ],
       "originalTargetFrameworks": [
         "net10.0"
       ],
       "sources": {
+<<<<<<< HEAD
         "C:\\Program Files (x86)\\Microsoft SDKs\\NuGetPackages\\": {},
         "C:\\Program Files\\dotnet\\library-packs": {},
+=======
+<<<<<<< HEAD
+        "C:\\Program Files (x86)\\Microsoft SDKs\\NuGetPackages\\": {},
+=======
+>>>>>>> 4c651eefdabd5e4f5a167fde8e86bc8bb5e80a47
+>>>>>>> a21fb2d698422efe4ba01fc20db5f2c1d69a472c
         "https://api.nuget.org/v3/index.json": {}
       },
       "frameworks": {
