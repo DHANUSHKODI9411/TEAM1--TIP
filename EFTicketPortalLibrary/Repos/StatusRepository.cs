@@ -1,11 +1,13 @@
 using System;
 using EFTicketPortalLibrary.Models;
+using Microsoft.Data.SqlClient;
+using Microsoft.EntityFrameworkCore;
 
 namespace EFTicketPortalLibrary.Repos;
 
 public class StatusRepository : IStatusRepository
 {
-    EYInstituteDBContext context = new EYInstituteDBContext();
+    TicketPortalDbContext context = new TicketPortalDbContext();
     public async Task AddStatusAsync(Status status)
     {
         try

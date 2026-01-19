@@ -14,4 +14,10 @@ public class TicketPortalDbContext : DbContext
     {
 
 }
+    public virtual DbSet<Employee> Employees { get; set; }
+    public virtual DbSet<Ticket> Tickets { get; set; }
+    public virtual DbSet<TicketReplies> TicketReplies { get; set; }
+    public virtual DbSet<Status> Statuses { get; set; }
+    public virtual DbSet<TicketType> TicketTypes { get; set; }
+    public virtual DbSet<SLA> SLAs { get; set; }
 }
