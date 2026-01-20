@@ -54,7 +54,7 @@ public class Ticket
     public string? AssignedEmployeeId { get; set; }
 
 
-     [ForeignKey(nameof(CreatedEmployeeId))]
+    [ForeignKey(nameof(CreatedEmployeeId))]
     [InverseProperty("CreatedTickets")]
     public virtual Employee Employee { get; set; }
 
