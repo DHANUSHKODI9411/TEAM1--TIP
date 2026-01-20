@@ -19,8 +19,8 @@ namespace TicketPortalWebApi.Controllers
         [ProducesResponseType(200)]
         public async Task<ActionResult> GetAll()
         {
-            List<TicketReplies> ticketreply = await ticketrepliesRepo.GetAllTicketRepliesAsync();
-            return Ok(ticketreply);
+            IEnumerable<TicketReplies> replies = await ticketrepliesRepo.GetAllTicketRepliesAsync();
+            return Ok(replies.ToList());
         }
  
         [HttpGet("{replyId}")]
@@ -103,8 +103,8 @@ namespace TicketPortalWebApi.Controllers
         {
             try
             {
-                var replies = await ticketrepliesRepo.GetRepliesByTicketAsync(ticketId);
-                return Ok(replies);
+                IEnumerable<TicketReplies> replies = await ticketrepliesRepo.GetRepliesByTicketAsync(ticketId);
+                return Ok(replies.ToList());
             }
             catch (TicketException ex)
             {
@@ -122,8 +122,8 @@ namespace TicketPortalWebApi.Controllers
         {
             try
             {
-                var replies = await ticketrepliesRepo.GetRepliesByCreatedEmployeeIdAsync(employeeId);
-                return Ok(replies);
+                IEnumerable<TicketReplies> replies = await ticketrepliesRepo.GetRepliesByCreatedEmployeeIdAsync(employeeId);
+                return Ok(replies.ToList());
             }
             catch (TicketException ex)
             {
@@ -138,8 +138,8 @@ namespace TicketPortalWebApi.Controllers
         {
             try
             {
-                var replies = await ticketrepliesRepo.GetRepliesByAssignedEmployeeIdAsync(assignedEmployeeId);
-                return Ok(replies);
+                IEnumerable<TicketReplies> replies = await ticketrepliesRepo.GetRepliesByAssignedEmployeeIdAsync(assignedEmployeeId);
+                return Ok(replies.ToList());
             }
             catch (TicketException ex)
             {
