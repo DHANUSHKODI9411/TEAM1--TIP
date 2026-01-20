@@ -8,8 +8,8 @@ namespace EFTicketPortalLibrary.Repos;
 public interface ITicketTypeRepository
 {
     Task<TicketType> CreateTicketTypeAsync(TicketType ticketType);
-    Task<TicketType> UpdateTicketTypeAsync(TicketType ticketType); 
+    Task UpdateTicketTypeAsync(string ticketTypeId, TicketType ticketType);
     Task DeleteTicketTypeAsync(string ticketTypeId); 
-    Task<TicketType?> GetTicketTypeByIdAsync(string ticketTypeId);
+    Task<TicketType?> GetTicketTypeAsync(string ticketTypeId);
     Task<IEnumerable<TicketType>> GetAllTicketTypesAsync();
 }
