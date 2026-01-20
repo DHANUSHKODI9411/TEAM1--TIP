@@ -1,138 +1,129 @@
 using Microsoft.AspNetCore.Http;
-using Microsoft.AspNetCore.Mvc;
 using EFTicketPortalLibrary.Models;
 using EFTicketPortalLibrary.Repos;
+using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Mvc;
 
 namespace TicketPortalWebApi.Controllers
 {
-    [Route("api/[controller]")]
+    [Route("/api/[controller]")]
     [ApiController]
+    [Authorize]
     public class TicketController : ControllerBase
     {
-        private readonly ITicketRepository _ticketRepository;
-
+        ITicketRepository _ticketRepository;
         public TicketController(ITicketRepository ticketRepository)
         {
             _ticketRepository = ticketRepository;
         }
-
         [HttpGet]
-        public async Task<ActionResult> GetAllTickets()
+        public async Task<ActionResult> GetAll()
         {
             var tickets = await _ticketRepository.GetAllTicketsAsync();
             return Ok(tickets);
         }
-
         [HttpGet("{ticketId}")]
-        public async Task<ActionResult> GetTicket(string ticketId)
+        [ProducesResponseType(200)]
+        [ProducesResponseType(404)]
+        public async Task<ActionResult> GetOne(string ticketId)
         {
             try
             {
                 var ticket = await _ticketRepository.GetTicketAsync(ticketId);
                 return Ok(ticket);
             }
-            catch (TicketException ex)
+            catch (Exception ex)
             {
                 return NotFound(ex.Message);
             }
         }
-
-        [HttpGet("created/{employeeId}")]
-        public async Task<ActionResult> GetByCreatedEmployee(string employeeId)
+ 
+        [HttpGet("bycreatedemployee/{createdEmployeeId}")]
+        public async Task<ActionResult> GetByCreatedEmployee(string createdEmployeeId)
         {
-            try
-            {
-                var tickets = await _ticketRepository
-                    .GetByCreatedEmployeeIdAsync(employeeId);
-                return Ok(tickets);
-            }
-            catch (TicketException ex)
-            {
-                return NotFound(ex.Message);
-            }
+            var tickets = await _ticketRepository.GetByCreatedEmployeeIdAsync(createdEmployeeId);
+            return Ok(tickets);
         }
-
-        [HttpGet("assigned/{employeeId}")]
-        public async Task<ActionResult> GetByAssignedEmployee(string employeeId)
+ 
+        [HttpGet("byassignedemployee/{assignedEmployeeId}")]
+        public async Task<ActionResult> GetByAssignedEmployee(string assignedEmployeeId)
         {
-            var tickets = await _ticketRepository
-                .GetByAssignedEmployeeIdAsync(employeeId);
+            var tickets = await _ticketRepository.GetByAssignedEmployeeIdAsync(assignedEmployeeId);
+            return Ok(tickets);
+        }
+ 
+        [HttpGet("bystatus/{statusId}")]
+        public async Task<ActionResult> GetByStatus(string statusId)
+        {
+            var tickets = await _ticketRepository.GetByStatusIdAsync(statusId);
+            return Ok(tickets);
+        }
+        [HttpGet("bytickettype/{ticketTypeId}")]
+        public async Task<ActionResult> GetByTicketType(string ticketTypeId)
+        {
+            var tickets = await _ticketRepository.GetByTicketTypeIdAsync(ticketTypeId);
             return Ok(tickets);
         }
 
-        [HttpGet("status/{statusId}")]
-        public async Task<ActionResult> GetByStatus(string statusId)
-        {
-            try
-            {
-                var tickets = await _ticketRepository
-                    .GetByStatusIdAsync(statusId);
-                return Ok(tickets);
-            }
-            catch (TicketException ex)
-            {
-                return NotFound(ex.Message);
-            }
-        }
-
-        [HttpGet("type/{typeId}")]
-        public async Task<ActionResult> GetByTicketType(string typeId)
-        {
-            try
-            {
-                var tickets = await _ticketRepository
-                    .GetByTicketTypeIdAsync(typeId);
-                return Ok(tickets);
-            }
-            catch (TicketException ex)
-            {
-                return NotFound(ex.Message);
-            }
-        }
-
         [HttpPost]
-        public async Task<ActionResult> CreateTicket(Ticket ticket)
+        [ProducesResponseType(201)]
+        [ProducesResponseType(400)]
+        public async Task<ActionResult> Add(Ticket ticket)
         {
             try
             {
                 await _ticketRepository.CreateTicketAsync(ticket);
-                return CreatedAtAction(
-                    nameof(GetTicket),
-                    new { ticketId = ticket.TicketId },
-                    ticket);
+                return Created($"api/ticket/{ticket.TicketId}", ticket);
             }
-            catch (TicketException ex)
+            catch (Exception ex)
             {
                 return BadRequest(ex.Message);
             }
         }
-
+ 
         [HttpPut("{ticketId}")]
-        public async Task<ActionResult> UpdateTicket(string ticketId, Ticket ticket)
+        [ProducesResponseType(200)]
+        [ProducesResponseType(400)]
+        [ProducesResponseType(404)]
+        public async Task<ActionResult> Update(string ticketId, Ticket ticket)
         {
             try
             {
                 await _ticketRepository.UpdateTicketAsync(ticketId, ticket);
-                return Ok("Ticket updated successfully");
+                return Ok(ticket);
             }
-            catch (TicketException ex)
+            catch (Exception ex)
             {
-                return BadRequest(ex.Message);
+                if (ex.Message.Contains("not found"))
+                    return NotFound(ex.Message);
+                else
+                    return BadRequest(ex.Message);
             }
         }
-
+ 
         [HttpDelete("{ticketId}")]
-        public async Task<ActionResult> DeleteTicket(string ticketId)
+        [ProducesResponseType(200)]
+        [ProducesResponseType(400)]
+        [ProducesResponseType(404)]
+        public async Task<ActionResult> Delete(string ticketId)
         {
             try
             {
                 await _ticketRepository.DeleteTicketAsync(ticketId);
-                return Ok("Ticket deleted successfully");
+                return Ok();
             }
-            catch (TicketException ex)
+            catch (Exception ex)
             {
-                return BadRequest(ex.Message);
+                if (ex.Message.Contains("not found"))
+                    return NotFound(ex.Message);
+                else
+                    return BadRequest(ex.Message);
             }
+
         }
+
     }
+
 }
+
+ 

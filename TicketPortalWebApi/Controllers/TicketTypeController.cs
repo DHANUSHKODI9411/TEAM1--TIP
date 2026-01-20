@@ -1,38 +1,44 @@
+using Microsoft.AspNetCore.Http;
 using EFTicketPortalLibrary.Models;
 using EFTicketPortalLibrary.Repos;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
- 
+using System;
+using System.Threading.Tasks;
 namespace TicketPortalWebApi.Controllers
 {
     [Route("/api/[controller]")]
     [ApiController]
     [Authorize]
-    public class SLAController : ControllerBase
+    public class TicketTypeController : ControllerBase
     {
-        ISLARepository _slaRepository;
+        ITicketTypeRepository _ticketTypeRepository;
  
-        public SLAController(ISLARepository slaRepository)
+        public TicketTypeController(ITicketTypeRepository ticketTypeRepository)
         {
-            _slaRepository = slaRepository;
+            _ticketTypeRepository = ticketTypeRepository;
         }
  
         [HttpGet]
         public async Task<ActionResult> GetAll()
         {
-            var slas = await _slaRepository.GetAllSLAsAsync();
-            return Ok(slas);
+            var ticketTypes = await _ticketTypeRepository.GetAllTicketTypesAsync();
+            return Ok(ticketTypes);
         }
  
-        [HttpGet("{slaId}")]
+        [HttpGet("{ticketTypeId}")]
         [ProducesResponseType(200)]
         [ProducesResponseType(404)]
-        public async Task<ActionResult> GetOne(string slaId)
+        public async Task<ActionResult> GetOne(string ticketTypeId)
         {
             try
             {
-                var sla = await _slaRepository.GetSLAAsync(slaId);
-                return Ok(sla);
+                var ticketType = await _ticketTypeRepository.GetTicketTypeAsync(ticketTypeId);
+ 
+                if (ticketType == null)
+                    return NotFound("Ticket Type not found");
+ 
+                return Ok(ticketType);
             }
             catch (Exception ex)
             {
@@ -40,22 +46,15 @@ namespace TicketPortalWebApi.Controllers
             }
         }
  
-        [HttpGet("bytickettype/{ticketTypeId}")]
-        public async Task<ActionResult> GetByTicketType(string ticketTypeId)
-        {
-            var slasByType = await _slaRepository.GetSLAsByTicketTypeIdAsync(ticketTypeId);
-            return Ok(slasByType);
-        }
- 
         [HttpPost]
         [ProducesResponseType(201)]
         [ProducesResponseType(400)]
-        public async Task<ActionResult> Add(SLA sla)
+        public async Task<ActionResult> Add(TicketType ticketType)
         {
             try
             {
-                await _slaRepository.AddSLAAsync(sla);
-                return Created($"api/sla/{sla.SLAid}", sla);
+                var createdTicketType = await _ticketTypeRepository.CreateTicketTypeAsync(ticketType);
+                return Created($"api/tickettype/{createdTicketType.TicketTypeId}", createdTicketType);
             }
             catch (Exception ex)
             {
@@ -63,16 +62,16 @@ namespace TicketPortalWebApi.Controllers
             }
         }
  
-        [HttpPut("{slaId}")]
+        [HttpPut("{ticketTypeId}")]
         [ProducesResponseType(200)]
         [ProducesResponseType(400)]
         [ProducesResponseType(404)]
-        public async Task<ActionResult> Update(string slaId, SLA sla)
+        public async Task<ActionResult> Update(string ticketTypeId, TicketType ticketType)
         {
             try
             {
-                await _slaRepository.UpdateSLAAsync(slaId, sla);
-                return Ok(sla);
+                await _ticketTypeRepository.UpdateTicketTypeAsync(ticketTypeId, ticketType);
+                return Ok(ticketType);
             }
             catch (Exception ex)
             {
@@ -83,15 +82,15 @@ namespace TicketPortalWebApi.Controllers
             }
         }
  
-        [HttpDelete("{slaId}")]
+        [HttpDelete("{ticketTypeId}")]
         [ProducesResponseType(200)]
         [ProducesResponseType(400)]
         [ProducesResponseType(404)]
-        public async Task<ActionResult> Delete(string slaId)
+        public async Task<ActionResult> Delete(string ticketTypeId)
         {
             try
             {
-                await _slaRepository.DeleteSLAAsync(slaId);
+                await _ticketTypeRepository.DeleteTicketTypeAsync(ticketTypeId);
                 return Ok();
             }
             catch (Exception ex)
