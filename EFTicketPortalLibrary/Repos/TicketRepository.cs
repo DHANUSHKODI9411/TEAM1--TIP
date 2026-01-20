@@ -16,7 +16,7 @@ public class TicketRepository : ITicketRepository
             await _context.Tickets.AddAsync(ticket);
             await _context.SaveChangesAsync();
         }
-        catch (Exception ex)
+        catch (DbUpdateException ex)
         {
             throw new TicketException(
                 $"Unexpected error while creating ticket. {ex.Message}", 500);
@@ -37,7 +37,7 @@ public class TicketRepository : ITicketRepository
 
             await _context.SaveChangesAsync();
         }
-        catch (Exception ex)
+        catch (DbUpdateException ex)
         {
             throw new TicketException(
                 $"Unexpected error while updating ticket. {ex.Message}", 500);
