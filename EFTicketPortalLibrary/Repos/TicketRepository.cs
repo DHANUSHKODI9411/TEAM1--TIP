@@ -1,121 +1,133 @@
-using System;
 using EFTicketPortalLibrary.Models;
+using Microsoft.Data.SqlClient;
 using Microsoft.EntityFrameworkCore;
 
 namespace EFTicketPortalLibrary.Repos;
 
 public class TicketRepository : ITicketRepository
 {
-    private readonly TicketPortalDbContext _context = new();
-
+    TicketPortalDbContext context = new TicketPortalDbContext();
 
     public async Task CreateTicketAsync(Ticket ticket)
     {
         try
         {
-            await _context.Tickets.AddAsync(ticket);
-            await _context.SaveChangesAsync();
+            await context.Tickets.AddAsync(ticket);
+            await context.SaveChangesAsync();
         }
-        catch (DbUpdateException ex)
+        catch(DbUpdateException ex)
         {
-            throw new TicketException(
-                $"Unexpected error while creating ticket. {ex.Message}", 500);
-        }
-    }
-
-    public async Task UpdateTicketAsync(Ticket ticket)
-    {
-        var existing = await GetTicketByIdAsync(ticket.TicketId);
-
-        try
-        {
-            existing.Title = ticket.Title;
-            existing.Description = ticket.Description;
-            existing.StatusId = ticket.StatusId;
-            existing.AssignedEmployeeId = ticket.AssignedEmployeeId;
-            existing.TicketTypeId = ticket.TicketTypeId;
-
-            await _context.SaveChangesAsync();
-        }
-        catch (DbUpdateException ex)
-        {
-            throw new TicketException(
-                $"Unexpected error while updating ticket. {ex.Message}", 500);
+            SqlException sqlException = ex.InnerException as SqlException;
+            int errorNumber = sqlException.Number;
+            switch(errorNumber)
+            {
+                case 2627: throw new TicketException("Ticket ID already exists", 501);
+                default: throw new TicketException(sqlException.Message, 599);
+            }
         }
     }
 
     public async Task DeleteTicketAsync(string ticketId)
     {
-        var ticket = await _context.Tickets
-            .Include(t => t.Replies)
+        Ticket ticket2del = await context.Tickets.Include("Replies")
             .FirstOrDefaultAsync(t => t.TicketId == ticketId);
-
-        if (ticket == null)
+        
+        if(ticket2del == null)
+            throw new TicketException("No such ticket ID", 502);
+        
+        if (ticket2del.Replies.Count == 0)
         {
-            throw new TicketException("Ticket not found.", 404);
+            context.Tickets.Remove(ticket2del);
+            await context.SaveChangesAsync();
         }
-
-        if (ticket.Replies.Any())
+        else
         {
-            throw new TicketException(
-                "Cannot delete ticket. Delete all ticket replies first.", 409);
+            throw new TicketException("Cannot delete ticket with replies", 503);
         }
-
-        _context.Tickets.Remove(ticket);
-        await _context.SaveChangesAsync();
     }
-
-
-    public async Task<Ticket> GetTicketByIdAsync(string ticketId)
-    {
-        var ticket = await _context.Tickets
-            .Include(t => t.CreatedEmployee)
-            .Include(t => t.AssignedEmployee)
-            .Include(t => t.TicketType)
-            .Include(t => t.Status)
-            .Include(t => t.Replies)
-            .FirstOrDefaultAsync(t => t.TicketId == ticketId);
-
-        if (ticket == null)
-        {
-            throw new TicketException("Ticket not found.", 404);
-        }
-
-        return ticket;
-    }
-
 
     public async Task<IEnumerable<Ticket>> GetAllTicketsAsync()
     {
-        return await _context.Tickets.ToListAsync();
+        List<Ticket> tickets = await context.Tickets
+            .Include("CreatedEmployee")
+            .Include("AssignedEmployee")
+            .Include("TicketType")
+            .Include("Status")
+            .Include("Replies")
+            .ToListAsync();
+        return tickets;
     }
 
+    public async Task<Ticket> GetTicketAsync(string ticketId)
+    {
+        try
+        {
+            Ticket ticket = await (from t in context.Tickets 
+                                 where t.TicketId == ticketId 
+                                 select t).FirstAsync();
+            return ticket;
+        }
+        catch
+        {
+            throw new TicketException("No such ticket ID", 502);
+        }
+    }
 
     public async Task<IEnumerable<Ticket>> GetByCreatedEmployeeIdAsync(string createdEmployeeId)
     {
-        return await _context.Tickets
-            .Where(t => t.CreatedEmployeeId == createdEmployeeId)
-            .ToListAsync();
+        List<Ticket> tickets = await (from t in context.Tickets 
+                                    where t.CreatedEmployeeId == createdEmployeeId 
+                                    select t).ToListAsync();
+        if (tickets.Count == 0)
+            throw new TicketException("No tickets created by this employee", 504);
+        return tickets;
     }
 
     public async Task<IEnumerable<Ticket>> GetByAssignedEmployeeIdAsync(string assignedEmployeeId)
     {
-        return await _context.Tickets
-            .Where(t => t.AssignedEmployeeId == assignedEmployeeId)
-            .ToListAsync();
+        List<Ticket> tickets = await (from t in context.Tickets 
+                                    where t.AssignedEmployeeId == assignedEmployeeId 
+                                    select t).ToListAsync();
+        return tickets;
     }
 
     public async Task<IEnumerable<Ticket>> GetByStatusIdAsync(string statusId)
     {
-        return await _context.Tickets
-            .Where(t => t.StatusId == statusId)
-            .ToListAsync();
+        List<Ticket> tickets = await (from t in context.Tickets 
+                                    where t.StatusId == statusId 
+                                    select t).ToListAsync();
+        if (tickets.Count == 0)
+            throw new TicketException("No tickets with this status", 504);
+        return tickets;
     }
 
     public async Task<IEnumerable<Ticket>> GetByTicketTypeIdAsync(string ticketTypeId)
     {
-        return await _context.Tickets
-            .Where(t => t.TicketTypeId == ticketTypeId)
-            .ToListAsync();
+        List<Ticket> tickets = await (from t in context.Tickets 
+                                    where t.TicketTypeId == ticketTypeId 
+                                    select t).ToListAsync();
+        if (tickets.Count == 0)
+            throw new TicketException("No tickets of this type", 504);
+        return tickets;
+    }
+
+    public async Task UpdateTicketAsync(string ticketId, Ticket ticket)
+    {
+        Ticket ticket2edit = await GetTicketAsync(ticketId);
+        try
+        {
+            ticket2edit.Title = ticket.Title;
+            ticket2edit.Description = ticket.Description;
+            ticket2edit.CreatedEmployeeId = ticket.CreatedEmployeeId;
+            ticket2edit.TicketTypeId = ticket.TicketTypeId;
+            ticket2edit.StatusId = ticket.StatusId;
+            ticket2edit.AssignedEmployeeId = ticket.AssignedEmployeeId;
+            await context.SaveChangesAsync();
+        }
+        catch(DbUpdateException ex)
+        {
+            SqlException sqlException = ex.InnerException as SqlException;
+            throw new TicketException(sqlException.Message, 599);
+        }
     }
 }

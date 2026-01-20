@@ -58,8 +58,7 @@ public class StatusRepository : IStatusRepository
     {
         try
         {
-            Status status = await context.Statuses
-                .FirstAsync(s => s.StatusId == statusId);
+            Status status = await (from s in context.Statuses where s.StatusId == statusId select s).FirstAsync();
             return status;
         }
         catch (InvalidOperationException)

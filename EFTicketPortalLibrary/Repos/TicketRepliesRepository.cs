@@ -1,13 +1,13 @@
-using System;
 using EFTicketPortalLibrary.Models;
-namespace EFTicketPortalLibrary.Repos;
 using Microsoft.Data.SqlClient;
 using Microsoft.EntityFrameworkCore;
 
+namespace EFTicketPortalLibrary.Repos;
+
 public class TicketRepliesRepository : ITicketRepliesRepository
 {
-    TicketPortalDbContext context = new TicketPortalDbContext();  // Replace with your actual DbContext
- 
+    TicketPortalDbContext context = new TicketPortalDbContext();
+
     public async Task AddTicketReplyAsync(TicketReplies reply)
     {
         try
@@ -21,23 +21,24 @@ public class TicketRepliesRepository : ITicketRepliesRepository
             int errorNumber = sqlException.Number;
             switch(errorNumber)
             {
-                case 2627:
-                case 2601: throw new TicketException("Reply ID or foreign key constraint violation", 501);
+                case 2627: throw new TicketException("Reply ID already exists", 501);
                 default: throw new TicketException(sqlException.Message, 599);
             }
         }
     }
- 
+
     public async Task DeleteTicketReplyAsync(string replyId)
     {
         TicketReplies reply2del = await context.TicketReplies
             .FirstOrDefaultAsync(r => r.ReplyId == replyId);
+        
         if(reply2del == null)
             throw new TicketException("No such reply ID", 502);
+        
         context.TicketReplies.Remove(reply2del);
         await context.SaveChangesAsync();
     }
- 
+
     public async Task<List<TicketReplies>> GetAllTicketRepliesAsync()
     {
         List<TicketReplies> replies = await context.TicketReplies
@@ -47,7 +48,7 @@ public class TicketRepliesRepository : ITicketRepliesRepository
             .ToListAsync();
         return replies;
     }
- 
+
     public async Task<TicketReplies> GetTicketReplyAsync(string replyId)
     {
         try
@@ -62,7 +63,7 @@ public class TicketRepliesRepository : ITicketRepliesRepository
             throw new TicketException("No such reply ID", 502);
         }
     }
- 
+
     public async Task<List<TicketReplies>> GetRepliesByTicketAsync(string ticketId)
     {
         List<TicketReplies> replies = await (from r in context.TicketReplies 
@@ -72,23 +73,32 @@ public class TicketRepliesRepository : ITicketRepliesRepository
             throw new TicketException("No replies for this ticket", 504);
         return replies;
     }
- 
-    public async Task<List<TicketReplies>> GetRepliesByEmployeeAsync(string employeeId)
+
+    public async Task<List<TicketReplies>> GetRepliesByCreatedEmployeeIdAsync(string employeeId)
     {
         List<TicketReplies> replies = await (from r in context.TicketReplies 
-                                           where r.CreatedEmployeeId == employeeId || r.AssignedEmployeeId == employeeId
+                                           where r.CreatedEmployeeId == employeeId 
                                            select r).ToListAsync();
         return replies;
     }
- 
+
+    public async Task<List<TicketReplies>> GetRepliesByAssignedEmployeeIdAsync(string assignedEmployeeId)
+    {
+        List<TicketReplies> replies = await (from r in context.TicketReplies 
+                                           where r.AssignedEmployeeId == assignedEmployeeId 
+                                           select r).ToListAsync();
+        return replies;
+    }
+
     public async Task UpdateTicketReplyAsync(string replyId, TicketReplies reply)
     {
         TicketReplies reply2edit = await GetTicketReplyAsync(replyId);
         try
         {
-            reply2edit.ReplyText = reply.ReplyText;
+            reply2edit.TicketId = reply.TicketId;
             reply2edit.CreatedEmployeeId = reply.CreatedEmployeeId;
             reply2edit.AssignedEmployeeId = reply.AssignedEmployeeId;
+            reply2edit.ReplyText = reply.ReplyText;
             reply2edit.RepliedDate = reply.RepliedDate;
             await context.SaveChangesAsync();
         }

@@ -25,32 +25,32 @@ public class TicketTypeRepository : ITicketTypeRepository
             switch (errorNumber)
             {
                 case 2627: 
-                    throw new TicketException("Ticket Type ID already exists", 601);
+                    throw new TicketException("Ticket Type ID already exists", 501);
                 default:
-                    throw new TicketException(sqlException.Message, 699);
+                    throw new TicketException(sqlException.Message, 599);
             }
         }
     }
 
-    public async Task<TicketType> UpdateTicketTypeAsync(TicketType ticketType)
+    public async Task UpdateTicketTypeAsync(string ticketTypeId, TicketType ticketType)
     {
-        TicketType typeToEdit = await GetTicketTypeByIdAsync(ticketType.TicketTypeId!);
-        
+        TicketType typeToEdit = await GetTicketTypeAsync(ticketTypeId); 
         try
         {
-            typeToEdit.TicketTypeName = ticketType.TicketTypeName;
-            typeToEdit.Description = ticketType.Description;
-            
-            await context.SaveChangesAsync();
-            return typeToEdit;
+            typeToEdit.TicketTypeName = ticketType.TicketTypeName;  
+            typeToEdit.Description = ticketType.Description;   
+            await context.SaveChangesAsync(); 
         }
-        catch (DbUpdateException ex)
+        catch(DbUpdateException ex)
         {
             SqlException sqlException = ex.InnerException as SqlException;
-            throw new TicketException(sqlException.Message, 699);
+            throw new TicketException(sqlException.Message, 599); 
         }
     }
-
+    public async Task<IEnumerable<TicketType>> GetAllTicketTypesAsync()
+    {
+        return await context.TicketTypes.ToListAsync();
+    }
     public async Task DeleteTicketTypeAsync(string ticketTypeId)
     {
         TicketType typeToDelete = await context.TicketTypes
@@ -59,7 +59,7 @@ public class TicketTypeRepository : ITicketTypeRepository
             .FirstOrDefaultAsync(t => t.TicketTypeId == ticketTypeId);
 
         if (typeToDelete == null)
-            throw new TicketException("No such ticket type ID", 602);
+            throw new TicketException("No such ticket type ID", 502);
 
         if (typeToDelete.Tickets.Count == 0 && typeToDelete.Slas.Count == 0)
         {
@@ -72,7 +72,7 @@ public class TicketTypeRepository : ITicketTypeRepository
         }
     }
 
-    public async Task<TicketType?> GetTicketTypeByIdAsync(string ticketTypeId)
+    public async Task<TicketType?> GetTicketTypeAsync(string ticketTypeId)
     {
         try
         {
@@ -81,12 +81,7 @@ public class TicketTypeRepository : ITicketTypeRepository
         }
         catch
         {
-            throw new TicketException("No such ticket type ID", 602);
+            throw new TicketException("No such ticket type ID", 502);
         }
-    }
-
-    public async Task<IEnumerable<TicketType>> GetAllTicketTypesAsync()
-    {
-        return await context.TicketTypes.ToListAsync();
     }
 }
