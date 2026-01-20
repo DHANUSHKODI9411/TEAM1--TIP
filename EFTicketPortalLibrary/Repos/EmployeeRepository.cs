@@ -1,7 +1,7 @@
 using EFTicketPortalLibrary.Models;
 using Microsoft.Data.SqlClient;
 using Microsoft.EntityFrameworkCore;
-using EFTicketPortalLibrary.Models;  // For TicketPortalDbContext
+using EFTicketPortalLibrary.Models;  
 
 namespace EFTicketPortalLibrary.Repos;
 
@@ -51,7 +51,7 @@ public class EmployeeRepository : IEmployeeRepository
 }
 
 
-    public async Task<IEnumerable<Employee>> GetAllEmployeesAsync()
+    public async Task<List<Employee>> GetAllEmployeesAsync()
     {
         List<Employee> employees = await context.Employees.ToListAsync();
         return employees;
@@ -89,4 +89,22 @@ public class EmployeeRepository : IEmployeeRepository
             throw new TicketException(sqlException.Message, 599);
         }
     }
+
+        
+public async Task<Employee> LoginAsync(string employeeId, string password)
+{
+    
+    Employee employee = await context.Employees
+        .FirstOrDefaultAsync(e => e.EmployeeId == employeeId);
+
+    if (employee == null)
+        throw new TicketException("Invalid Employee ID", 502);
+
+
+    if (employee.Password != password)
+        throw new TicketException("Invalid Password", 504);
+    return employee;
 }
+
+    }
+

@@ -9,5 +9,7 @@ public interface IEmployeeRepository
     Task UpdateEmployeeAsync(string employeeId, Employee employee);
     Task DeleteEmployeeAsync(string employeeId);
     Task<Employee> GetEmployeeAsync(string employeeId);
-    Task<IEnumerable<Employee>> GetAllEmployeesAsync();
+    Task<List<Employee>> GetAllEmployeesAsync();
+
+    Task<Employee> LoginAsync(string employeeId, string password);
 }
