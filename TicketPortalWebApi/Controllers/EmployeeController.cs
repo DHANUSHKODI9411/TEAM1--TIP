@@ -93,7 +93,7 @@ public class EmployeeController : ControllerBase
             return BadRequest(ex.Message);
         }
     }
-    [HttpPost("login")]
+    [HttpGet("{employeeId}/{password}")]
     public async Task<ActionResult> Login([FromBody] dynamic login)
     {
         string employeeId = login.employeeId;
