@@ -12,15 +12,15 @@ namespace TicketPortalWebApi.Controllers
     [Authorize]
     public class StatusController : ControllerBase
     {
-        IStatusRepository _statusRepository;
+        IStatusRepository statusRepo;
         public StatusController(IStatusRepository statusRepository)
         {
-            _statusRepository = statusRepository;
+            statusRepo = statusRepository;
         }
         [HttpGet]
         public async Task<ActionResult> GetAll()
         {
-            var statuses = await _statusRepository.GetAllStatusesAsync();
+            List<Status> statuses = await statusRepo.GetAllStatusesAsync();
             return Ok(statuses);
         }
         [HttpGet("{statusId}")]
@@ -30,10 +30,10 @@ namespace TicketPortalWebApi.Controllers
         {
             try
             {
-                var status = await _statusRepository.GetStatusAsync(statusId);
+                Status status = await statusRepo.GetStatusAsync(statusId);
                 return Ok(status);
             }
-            catch (Exception ex)
+            catch (TicketException ex)
             {
                 return NotFound(ex.Message);
             }
@@ -45,10 +45,10 @@ namespace TicketPortalWebApi.Controllers
         {
             try
             {
-                await _statusRepository.AddStatusAsync(status);
+                await statusRepo.AddStatusAsync(status);
                 return Created($"api/status/{status.StatusId}", status);
             }
-            catch (Exception ex)
+            catch (TicketException ex)
             {
                 return BadRequest(ex.Message);
             }
@@ -61,12 +61,12 @@ namespace TicketPortalWebApi.Controllers
         {
             try
             {
-                await _statusRepository.UpdateStatusAsync(statusId, status);
+                await statusRepo.UpdateStatusAsync(statusId, status);
                 return Ok(status);
             }
-            catch (Exception ex)
+            catch (TicketException ex)
             {
-                if (ex.Message.Contains("not found"))
+                if (ex.ErrorNumber == 502)
                     return NotFound(ex.Message);
                 else
                     return BadRequest(ex.Message);
@@ -81,12 +81,12 @@ namespace TicketPortalWebApi.Controllers
         {
             try
             {
-                await _statusRepository.DeleteStatusAsync(statusId);
+                await statusRepo.DeleteStatusAsync(statusId);
                 return Ok();
             }
-            catch (Exception ex)
+            catch (TicketException ex)
             {
-                if (ex.Message.Contains("not found"))
+                if (ex.ErrorNumber == 502)
                     return NotFound(ex.Message);
                 else
                     return BadRequest(ex.Message);
