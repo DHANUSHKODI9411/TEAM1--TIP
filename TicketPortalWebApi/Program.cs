@@ -9,6 +9,12 @@ var builder = WebApplication.CreateBuilder(args);
 // Add services to the container.
  
 builder.Services.AddControllers();
+builder.Services.AddScoped<IEmployeeRepository, EmployeeRepository>();
+builder.Services.AddScoped<ITicketRepository, TicketRepository>();
+builder.Services.AddScoped<ISLARepository, SLARepository>();
+builder.Services.AddScoped<ITicketRepliesRepository, TicketRepliesRepository>();
+builder.Services.AddScoped<IStatusRepository, StatusRepository>();
+builder.Services.AddScoped<ITicketTypeRepository, TicketTypeRepository>();
 
 builder.Services.AddCors(options=>options.AddPolicy("MyPolicy",policy=>policy.AllowAnyOrigin().AllowAnyMethod().AllowAnyHeader()));
  
