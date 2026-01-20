@@ -10,17 +10,17 @@ namespace TicketPortalWebApi.Controllers
     [Authorize]
     public class SLAController : ControllerBase
     {
-        ISLARepository _slaRepository;
+        ISLARepository slaRepo;
  
         public SLAController(ISLARepository slaRepository)
         {
-            _slaRepository = slaRepository;
+            slaRepo = slaRepository;
         }
  
         [HttpGet]
         public async Task<ActionResult> GetAll()
         {
-            var slas = await _slaRepository.GetAllSLAsAsync();
+            var slas = await slaRepo.GetAllSLAsAsync();
             return Ok(slas);
         }
  
@@ -31,20 +31,29 @@ namespace TicketPortalWebApi.Controllers
         {
             try
             {
-                var sla = await _slaRepository.GetSLAAsync(slaId);
+                var sla = await slaRepo.GetSLAAsync(slaId);
                 return Ok(sla);
             }
-            catch (Exception ex)
+            catch (TicketException ex)
             {
                 return NotFound(ex.Message);
             }
         }
  
         [HttpGet("bytickettype/{ticketTypeId}")]
+        [ProducesResponseType(200)]
+        [ProducesResponseType(404)]
         public async Task<ActionResult> GetByTicketType(string ticketTypeId)
         {
-            var slasByType = await _slaRepository.GetSLAsByTicketTypeIdAsync(ticketTypeId);
-            return Ok(slasByType);
+            try
+            {
+                List<SLA> SLAs = await slaRepo.GetSLAsByTicketTypeIdAsync(ticketTypeId);
+                return Ok(SLAs);
+            }
+            catch(TicketException ex)
+            {
+                return NotFound(ex.Message);
+            }
         }
  
         [HttpPost]
@@ -54,10 +63,10 @@ namespace TicketPortalWebApi.Controllers
         {
             try
             {
-                await _slaRepository.AddSLAAsync(sla);
+                await slaRepo.AddSLAAsync(sla);
                 return Created($"api/sla/{sla.SLAid}", sla);
             }
-            catch (Exception ex)
+            catch (TicketException ex)
             {
                 return BadRequest(ex.Message);
             }
@@ -71,12 +80,12 @@ namespace TicketPortalWebApi.Controllers
         {
             try
             {
-                await _slaRepository.UpdateSLAAsync(slaId, sla);
+                await slaRepo.UpdateSLAAsync(slaId, sla);
                 return Ok(sla);
             }
-            catch (Exception ex)
+            catch (TicketException ex)
             {
-                if (ex.Message.Contains("not found"))
+                if (ex.ErrorNumber == 502)
                     return NotFound(ex.Message);
                 else
                     return BadRequest(ex.Message);
@@ -91,12 +100,12 @@ namespace TicketPortalWebApi.Controllers
         {
             try
             {
-                await _slaRepository.DeleteSLAAsync(slaId);
+                await slaRepo.DeleteSLAAsync(slaId);
                 return Ok();
             }
-            catch (Exception ex)
+            catch (TicketException ex)
             {
-                if (ex.Message.Contains("not found"))
+                if (ex.ErrorNumber == 502)
                     return NotFound(ex.Message);
                 else
                     return BadRequest(ex.Message);
