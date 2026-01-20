@@ -38,7 +38,6 @@ namespace TicketPortalWebApi.Controllers
                 return NotFound(ex.Message);
             }
         }
- 
         [HttpGet("bycreatedemployee/{createdEmployeeId}")]
         [ProducesResponseType(200)]
         [ProducesResponseType(404)]
@@ -54,7 +53,6 @@ namespace TicketPortalWebApi.Controllers
                 return NotFound(ex.Message);
             }
         }
- 
         [HttpGet("byassignedemployee/{assignedEmployeeId}")]
         [ProducesResponseType(200)]
         [ProducesResponseType(404)]
@@ -70,7 +68,6 @@ namespace TicketPortalWebApi.Controllers
                 return NotFound(ex.Message);
             }
         }
- 
         [HttpGet("bystatus/{statusId}")]
         [ProducesResponseType(200)]
         [ProducesResponseType(404)]
@@ -101,7 +98,6 @@ namespace TicketPortalWebApi.Controllers
                 return NotFound(ex.Message);
             }
         }
-
         [HttpPost]
         [ProducesResponseType(201)]
         [ProducesResponseType(400)]
@@ -117,7 +113,6 @@ namespace TicketPortalWebApi.Controllers
                 return BadRequest(ex.Message);
             }
         }
- 
         [HttpPut("{ticketId}")]
         [ProducesResponseType(200)]
         [ProducesResponseType(400)]
@@ -137,7 +132,6 @@ namespace TicketPortalWebApi.Controllers
                     return BadRequest(ex.Message);
             }
         }
- 
         [HttpDelete("{ticketId}")]
         [ProducesResponseType(200)]
         [ProducesResponseType(400)]
@@ -156,11 +150,8 @@ namespace TicketPortalWebApi.Controllers
                 else
                     return BadRequest(ex.Message);
             }
-
         }
-
     }
-
 }
 
  
