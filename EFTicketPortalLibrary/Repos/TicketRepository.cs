@@ -69,7 +69,7 @@ public class TicketRepository : ITicketRepository
     public async Task<Ticket> GetTicketByIdAsync(string ticketId)
     {
         var ticket = await _context.Tickets
-            .Include(t => t.Employee)
+            .Include(t => t.CreatedEmployee)
             .Include(t => t.AssignedEmployee)
             .Include(t => t.TicketType)
             .Include(t => t.Status)
