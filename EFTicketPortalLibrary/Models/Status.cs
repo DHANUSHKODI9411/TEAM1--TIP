@@ -9,14 +9,14 @@ public class Status
 {
     [Key]
     [DatabaseGenerated(DatabaseGeneratedOption.None)]
-    [Column(TypeName = "CHAR(4)")]
-    [MaxLength(4, ErrorMessage = "Status Id should not have more than 4 characters")]
+    [Column(TypeName = "CHAR(5)")]
+    [MaxLength(5, ErrorMessage = "Status Id should not have more than 5 characters")]
     public string? StatusId { get; set; }
 
     [Required(ErrorMessage="Staus Name should not be empty")]
     [Column(TypeName = "VARCHAR(30)")]
     [MaxLength(30, ErrorMessage = "Status Name cannot have more than 30 characters")]
-    public string? StatusName { get; set; }
+    public string StatusName { get; set; }
 
     [Column(TypeName = "VARCHAR(100)")]
     [MaxLength(100, ErrorMessage = "Description cannot have more than 100 characters")]
