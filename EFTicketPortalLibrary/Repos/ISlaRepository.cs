@@ -2,7 +2,7 @@ using EFTicketPortalLibrary.Models;
 using System.Collections.Generic;
 using System.Threading.Tasks;
 
-namespace EFTicketPortalLibrary.Repositories
+namespace EFTicketPortalLibrary.Repos
 {
     public interface ISLARepository
     {

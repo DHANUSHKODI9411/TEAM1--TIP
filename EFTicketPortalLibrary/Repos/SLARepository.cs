@@ -22,19 +22,19 @@ public class SLARepository: ISLARepository
             switch(errorNumber)
             {
                 case 2627: 
-                case 2601: throw new SLAException("SLA ID or TicketType ID already exists", 501);
-                default: throw new SLAException(sqlException.Message, 599);
+                case 2601: throw new TicketException("SLA ID or TicketType ID already exists", 501);
+                default: throw new TicketException(sqlException.Message, 599);
             }
         }
     }
 
     public async Task DeleteSLAAsync(string slaId)
     {
-        SLA sla2del = await context.SLAs.Include("TicketType").ThenInclude("Tickets")
+        SLA sla2del = await context.SLAs.Include("TicketType").Include("Tickets")
             .FirstOrDefaultAsync(sla => sla.SLAid == slaId);
         
         if(sla2del == null)
-            throw new SLAException("No such SLA ID", 502);
+            throw new TicketException("No such SLA ID", 502);
         if (sla2del.TicketType.Tickets.Count == 0)
         {
             context.SLAs.Remove(sla2del);
@@ -42,7 +42,7 @@ public class SLARepository: ISLARepository
         }
         else
         {
-            throw new SLAException("Cannot delete SLA linked to ticket type with active tickets", 503);
+            throw new TicketException("Cannot delete SLA linked to ticket type with active tickets", 503);
         }
     }
 
@@ -61,7 +61,7 @@ public class SLARepository: ISLARepository
         }
         catch
         {
-            throw new SLAException("No such SLA ID", 502);
+            throw new TicketException("No such SLA ID", 502);
         }
     }
 
@@ -69,7 +69,7 @@ public class SLARepository: ISLARepository
     {
         List<SLA> slas = await (from p in context.SLAs where p.TicketTypeId == ticketTypeId select p).ToListAsync();
         if (slas.Count == 0)
-            throw new SLAException("No SLAs for this ticket type", 504);
+            throw new TicketException("No SLAs for this ticket type", 504);
         return slas;
     }
 
@@ -87,7 +87,7 @@ public class SLARepository: ISLARepository
         catch(DbUpdateException ex)
         {
             SqlException sqlException = ex.InnerException as SqlException;
-            throw new SLAException(sqlException.Message, 599);
+            throw new TicketException(sqlException.Message, 599);
         }
     }
 }
