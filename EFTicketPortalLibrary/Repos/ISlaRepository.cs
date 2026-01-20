@@ -6,14 +6,12 @@ namespace EFTicketPortalLibrary.Repositories
 {
     public interface ISLARepository
     {
-        Task<IEnumerable<SLA>> GetAllAsync();
-        Task<SLA?> GetByIdAsync(string slaId);
-        Task<SLA?> GetByTicketTypeIdAsync(string ticketTypeId);
-        Task AddAsync(SLA sla);
-        Task UpdateAsync(SLA sla);
-        Task DeleteAsync(string slaId);
+        Task AddSLAAsync(SLA sla);                         
+        Task UpdateSLAAsync(string slaId, SLA sla);
+        Task DeleteSLAAsync(string slaId);           
+        Task<List<SLA>> GetAllSLAsAsync();                   
+        Task<SLA> GetSLAAsync(string slaId);         
+        Task<List<SLA>> GetSLAsByTicketTypeIdAsync(string ticketTypeId);
     }
-
-    
 }
             
