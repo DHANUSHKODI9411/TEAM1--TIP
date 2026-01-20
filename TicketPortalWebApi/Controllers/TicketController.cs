@@ -11,16 +11,17 @@ namespace TicketPortalWebApi.Controllers
     [Authorize]
     public class TicketController : ControllerBase
     {
-        ITicketRepository _ticketRepository;
+        ITicketRepository ticketRepo;
         public TicketController(ITicketRepository ticketRepository)
         {
-            _ticketRepository = ticketRepository;
+            ticketRepo = ticketRepository;
         }
+        [HttpGet]
         [HttpGet]
         public async Task<ActionResult> GetAll()
         {
-            var tickets = await _ticketRepository.GetAllTicketsAsync();
-            return Ok(tickets);
+            IEnumerable<Ticket> tickets = await ticketRepo.GetAllTicketsAsync();
+            return Ok(tickets.ToList());
         }
         [HttpGet("{ticketId}")]
         [ProducesResponseType(200)]
@@ -29,40 +30,76 @@ namespace TicketPortalWebApi.Controllers
         {
             try
             {
-                var ticket = await _ticketRepository.GetTicketAsync(ticketId);
+                Ticket ticket = await ticketRepo.GetTicketAsync(ticketId);
                 return Ok(ticket);
             }
-            catch (Exception ex)
+            catch (TicketException ex)
             {
                 return NotFound(ex.Message);
             }
         }
  
         [HttpGet("bycreatedemployee/{createdEmployeeId}")]
+        [ProducesResponseType(200)]
+        [ProducesResponseType(404)]
         public async Task<ActionResult> GetByCreatedEmployee(string createdEmployeeId)
         {
-            var tickets = await _ticketRepository.GetByCreatedEmployeeIdAsync(createdEmployeeId);
-            return Ok(tickets);
+            try
+            {
+                IEnumerable<Ticket> tickets = await ticketRepo.GetByCreatedEmployeeIdAsync(createdEmployeeId);
+                return Ok(tickets.ToList());
+            }
+            catch(TicketException ex)
+            {
+                return NotFound(ex.Message);
+            }
         }
  
         [HttpGet("byassignedemployee/{assignedEmployeeId}")]
+        [ProducesResponseType(200)]
+        [ProducesResponseType(404)]
         public async Task<ActionResult> GetByAssignedEmployee(string assignedEmployeeId)
         {
-            var tickets = await _ticketRepository.GetByAssignedEmployeeIdAsync(assignedEmployeeId);
-            return Ok(tickets);
+            try
+            {
+                IEnumerable<Ticket> tickets = await ticketRepo.GetByAssignedEmployeeIdAsync(assignedEmployeeId);
+                return Ok(tickets.ToList());
+            }
+            catch(TicketException ex)
+            {
+                return NotFound(ex.Message);
+            }
         }
  
         [HttpGet("bystatus/{statusId}")]
+        [ProducesResponseType(200)]
+        [ProducesResponseType(404)]
         public async Task<ActionResult> GetByStatus(string statusId)
         {
-            var tickets = await _ticketRepository.GetByStatusIdAsync(statusId);
-            return Ok(tickets);
+            try
+            {
+                IEnumerable<Ticket> tickets = await ticketRepo.GetByStatusIdAsync(statusId);
+                return Ok(tickets.ToList());
+            }
+            catch(TicketException ex)
+            {
+                return NotFound(ex.Message);
+            }
         }
         [HttpGet("bytickettype/{ticketTypeId}")]
+        [ProducesResponseType(200)]
+        [ProducesResponseType(404)]
         public async Task<ActionResult> GetByTicketType(string ticketTypeId)
         {
-            var tickets = await _ticketRepository.GetByTicketTypeIdAsync(ticketTypeId);
-            return Ok(tickets);
+            try
+            {
+                IEnumerable<Ticket> tickets = await ticketRepo.GetByTicketTypeIdAsync(ticketTypeId);
+                return Ok(tickets.ToList());
+            }
+            catch(TicketException ex)
+            {
+                return NotFound(ex.Message);
+            }
         }
 
         [HttpPost]
@@ -72,10 +109,10 @@ namespace TicketPortalWebApi.Controllers
         {
             try
             {
-                await _ticketRepository.CreateTicketAsync(ticket);
+                await ticketRepo.CreateTicketAsync(ticket);
                 return Created($"api/ticket/{ticket.TicketId}", ticket);
             }
-            catch (Exception ex)
+            catch (TicketException ex)
             {
                 return BadRequest(ex.Message);
             }
@@ -89,12 +126,12 @@ namespace TicketPortalWebApi.Controllers
         {
             try
             {
-                await _ticketRepository.UpdateTicketAsync(ticketId, ticket);
+                await ticketRepo.UpdateTicketAsync(ticketId, ticket);
                 return Ok(ticket);
             }
-            catch (Exception ex)
+            catch (TicketException ex)
             {
-                if (ex.Message.Contains("not found"))
+                if (ex.ErrorNumber == 502)
                     return NotFound(ex.Message);
                 else
                     return BadRequest(ex.Message);
@@ -109,12 +146,12 @@ namespace TicketPortalWebApi.Controllers
         {
             try
             {
-                await _ticketRepository.DeleteTicketAsync(ticketId);
+                await ticketRepo.DeleteTicketAsync(ticketId);
                 return Ok();
             }
-            catch (Exception ex)
+            catch (TicketException ex)
             {
-                if (ex.Message.Contains("not found"))
+                if (ex.ErrorNumber == 502)
                     return NotFound(ex.Message);
                 else
                     return BadRequest(ex.Message);
