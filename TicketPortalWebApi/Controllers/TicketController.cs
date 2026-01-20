@@ -16,7 +16,6 @@ namespace TicketPortalWebApi.Controllers
             _ticketRepository = ticketRepository;
         }
 
-        // GET: api/ticket
         [HttpGet]
         public async Task<ActionResult> GetAllTickets()
         {
@@ -24,13 +23,12 @@ namespace TicketPortalWebApi.Controllers
             return Ok(tickets);
         }
 
-        // GET: api/ticket/{id}
-        [HttpGet("{id}")]
-        public async Task<ActionResult> GetTicketById(string id)
+        [HttpGet("{ticketId}")]
+        public async Task<ActionResult> GetTicket(string ticketId)
         {
             try
             {
-                var ticket = await _ticketRepository.GetTicketByIdAsync(id);
+                var ticket = await _ticketRepository.GetTicketAsync(ticketId);
                 return Ok(ticket);
             }
             catch (TicketException ex)
@@ -39,47 +37,69 @@ namespace TicketPortalWebApi.Controllers
             }
         }
 
-        // GET: api/ticket/created/{empId}
-        [HttpGet("created/{empId}")]
-        public async Task<ActionResult> GetByCreatedEmployee(string empId)
+        [HttpGet("created/{employeeId}")]
+        public async Task<ActionResult> GetByCreatedEmployee(string employeeId)
         {
-            var tickets = await _ticketRepository.GetByCreatedEmployeeIdAsync(empId);
+            try
+            {
+                var tickets = await _ticketRepository
+                    .GetByCreatedEmployeeIdAsync(employeeId);
+                return Ok(tickets);
+            }
+            catch (TicketException ex)
+            {
+                return NotFound(ex.Message);
+            }
+        }
+
+        [HttpGet("assigned/{employeeId}")]
+        public async Task<ActionResult> GetByAssignedEmployee(string employeeId)
+        {
+            var tickets = await _ticketRepository
+                .GetByAssignedEmployeeIdAsync(employeeId);
             return Ok(tickets);
         }
 
-        // GET: api/ticket/assigned/{empId}
-        [HttpGet("assigned/{empId}")]
-        public async Task<ActionResult> GetByAssignedEmployee(string empId)
-        {
-            var tickets = await _ticketRepository.GetByAssignedEmployeeIdAsync(empId);
-            return Ok(tickets);
-        }
-
-        // GET: api/ticket/status/{statusId}
         [HttpGet("status/{statusId}")]
         public async Task<ActionResult> GetByStatus(string statusId)
         {
-            var tickets = await _ticketRepository.GetByStatusIdAsync(statusId);
-            return Ok(tickets);
+            try
+            {
+                var tickets = await _ticketRepository
+                    .GetByStatusIdAsync(statusId);
+                return Ok(tickets);
+            }
+            catch (TicketException ex)
+            {
+                return NotFound(ex.Message);
+            }
         }
 
-        // GET: api/ticket/type/{typeId}
         [HttpGet("type/{typeId}")]
         public async Task<ActionResult> GetByTicketType(string typeId)
         {
-            var tickets = await _ticketRepository.GetByTicketTypeIdAsync(typeId);
-            return Ok(tickets);
+            try
+            {
+                var tickets = await _ticketRepository
+                    .GetByTicketTypeIdAsync(typeId);
+                return Ok(tickets);
+            }
+            catch (TicketException ex)
+            {
+                return NotFound(ex.Message);
+            }
         }
 
-        // POST: api/ticket
         [HttpPost]
         public async Task<ActionResult> CreateTicket(Ticket ticket)
         {
             try
             {
                 await _ticketRepository.CreateTicketAsync(ticket);
-                return CreatedAtAction(nameof(GetTicketById),
-                    new { id = ticket.TicketId }, ticket);
+                return CreatedAtAction(
+                    nameof(GetTicket),
+                    new { ticketId = ticket.TicketId },
+                    ticket);
             }
             catch (TicketException ex)
             {
@@ -87,39 +107,31 @@ namespace TicketPortalWebApi.Controllers
             }
         }
 
-        // PUT: api/ticket
-        [HttpPut]
-        public async Task<ActionResult> UpdateTicket(Ticket ticket)
+        [HttpPut("{ticketId}")]
+        public async Task<ActionResult> UpdateTicket(string ticketId, Ticket ticket)
         {
             try
             {
-                await _ticketRepository.UpdateTicketAsync(ticket);
-                return Ok(ticket);
+                await _ticketRepository.UpdateTicketAsync(ticketId, ticket);
+                return Ok("Ticket updated successfully");
             }
             catch (TicketException ex)
             {
-                if (ex.ErrorNumber == 404)
-                    return NotFound(ex.Message);
-
                 return BadRequest(ex.Message);
             }
         }
 
-        // DELETE: api/ticket/{id}
-        [HttpDelete("{id}")]
-        public async Task<ActionResult> DeleteTicket(string id)
+        [HttpDelete("{ticketId}")]
+        public async Task<ActionResult> DeleteTicket(string ticketId)
         {
             try
             {
-                await _ticketRepository.DeleteTicketAsync(id);
+                await _ticketRepository.DeleteTicketAsync(ticketId);
                 return Ok("Ticket deleted successfully");
             }
             catch (TicketException ex)
             {
-                if (ex.ErrorNumber == 404)
-                    return NotFound(ex.Message);
-
-                return Conflict(ex.Message);
+                return BadRequest(ex.Message);
             }
         }
     }
