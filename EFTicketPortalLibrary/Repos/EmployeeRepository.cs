@@ -34,26 +34,22 @@ public class EmployeeRepository : IEmployeeRepository
         Employee emp2del = await context.Employees
             .Include("CreatedTickets")
             .Include("AssignedTickets")
-            .Include("CreatedEmpReplies")
-            .Include("AssignedEmpReplies")
             .FirstOrDefaultAsync(emp => emp.EmployeeId == employeeId);
         
         if(emp2del == null)
             throw new TicketException("No such employee ID", 502);
         
-        if (emp2del.CreatedTickets.Count == 0 && 
-            emp2del.AssignedTickets.Count == 0 && 
-            emp2del.CreatedEmpReplies.Count == 0 && 
-            emp2del.AssignedEmpReplies.Count == 0)
+        if (emp2del.CreatedTickets.Count == 0 && emp2del.AssignedTickets.Count == 0)
         {
             context.Employees.Remove(emp2del);
             await context.SaveChangesAsync();
         }
         else
         {
-            throw new TicketException("Cannot delete employee with associated tickets or replies", 503);
+            throw new TicketException("Cannot delete employee with associated tickets", 503);
         }
-    }
+}
+
 
     public async Task<IEnumerable<Employee>> GetAllEmployeesAsync()
     {
