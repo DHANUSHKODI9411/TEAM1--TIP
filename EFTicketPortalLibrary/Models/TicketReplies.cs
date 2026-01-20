@@ -1,14 +1,10 @@
 using System;
-
 using System.ComponentModel.DataAnnotations;
-
 using System.ComponentModel.DataAnnotations.Schema;
-
- 
+using System.Collections.Generic;
 
 namespace EFTicketPortalLibrary.Models;
 
- 
 [Table("TicketReplies")]
 public class TicketReplies
 {
@@ -16,42 +12,34 @@ public class TicketReplies
     [Column(TypeName = "char(5)")]
     [Required(ErrorMessage = "ReplyId is required...")]
     [MaxLength(5, ErrorMessage = "Reply Id must be exactly 5 characters only.")]
-    public string? ReplyId { get; set;} = null!;
+    public string ReplyId { get; set; } = null!;
 
     [Column(TypeName = "char(5)")]
     [Required(ErrorMessage = "TicketId is required...")]
     [MaxLength(5, ErrorMessage = "Ticket Id must be exactly 5 characters only.")]
-    public string? TicketId { get; set; } = null!;
+    [ForeignKey("Ticket")] 
+    public string TicketId { get; set; } = null!;
 
     [Column(TypeName = "char(5)")]
     [Required(ErrorMessage = "EmployeeId is required...")]
     [MaxLength(5, ErrorMessage = "Employee Id must be exactly 5 characters only.")]
-    public string? CreatedEmployeeId { get; set;} = null!;
+    [ForeignKey("CreatedEmployee")] 
+    public string CreatedEmployeeId { get; set; } = null!;
 
     [Column(TypeName = "char(5)")]
-    [Required(ErrorMessage = "Assgned EmployeeId is required...")]
     [MaxLength(5, ErrorMessage = "AssignedEmployee Id must be exactly 5 characters only.")]
-    public string? AssignedEmployeeId {get; set;} = null!;
+    [ForeignKey("AssignedEmployee")] 
+    public string? AssignedEmployeeId { get; set; } = null!;
 
     [Column(TypeName = "nvarchar(max)")]
     [Required(ErrorMessage = "Please reply for the text...")]
-    public string? ReplyText { get; set;} = null!;
+    public string ReplyText { get; set; } = null!;
 
+    [Column(TypeName = "DATETIME")]
     [Required(ErrorMessage = "Please select the date...")]
-    public DateTime RepliedDate { get; set;}
+    public DateTime RepliedDate { get; set; }
 
-    [ForeignKey(nameof(TicketId))]
-    [InverseProperty("Replies")]
-    public virtual Ticket Ticket { get; set; } = null!;
-
-    [ForeignKey(nameof(CreatedEmployeeId))]
-    [InverseProperty("CreatedEmpReplies")]
-    public virtual Employee CreatedEmployee { get; set; } = null!;
-
-    [ForeignKey(nameof(AssignedEmployeeId))]
-    [InverseProperty("AssignedEmpReplies")]
+    public virtual Ticket? Ticket { get; set; }
+    public virtual Employee? CreatedEmployee { get; set; }
     public virtual Employee? AssignedEmployee { get; set; }
 }
-
- 
-
