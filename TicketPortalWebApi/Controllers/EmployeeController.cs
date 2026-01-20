@@ -94,22 +94,23 @@ public class EmployeeController : ControllerBase
         }
     }
     [HttpGet("{employeeId}/{password}")]
-    public async Task<ActionResult> Login([FromBody] dynamic login)
+    [ProducesResponseType(200)]
+    [ProducesResponseType(400)]
+    [ProducesResponseType(401)]
+    [AllowAnonymous]
+    public async Task<ActionResult<Employee>> Login(string empId, string password)
     {
-        string employeeId = login.employeeId;
-        string password = login.password;
         try
         {
-            var employee = await empRepo.LoginAsync(employeeId, password);
+            Employee employee = await empRepo.LoginAsync(empId, password);
             return Ok(employee);
         }
         catch (TicketException ex)
         {
-            if (ex.ErrorNumber == 502) 
-            return NotFound(ex.Message);
-            if (ex.ErrorNumber == 504) 
-            return BadRequest(ex.Message);
-            else
+            if (ex.ErrorNumber == 505)
+                return Unauthorized(ex.Message);
+            if (ex.ErrorNumber == 502)
+                return NotFound(ex.Message);
             return BadRequest(ex.Message);
         }
     }

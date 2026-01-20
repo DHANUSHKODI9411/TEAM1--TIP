@@ -8,7 +8,6 @@ namespace EFTicketPortalLibrary.Repos;
 public class EmployeeRepository : IEmployeeRepository
 {
     TicketPortalDbContext context = new TicketPortalDbContext();
-
     public async Task AddEmployeeAsync(Employee employee)
     {
         try
@@ -28,7 +27,6 @@ public class EmployeeRepository : IEmployeeRepository
             }
         }
     }
-
     public async Task DeleteEmployeeAsync(string employeeId)
     {
         Employee emp2del = await context.Employees
@@ -48,15 +46,12 @@ public class EmployeeRepository : IEmployeeRepository
         {
             throw new TicketException("Cannot delete employee with associated tickets", 503);
         }
-}
-
-
+    }
     public async Task<List<Employee>> GetAllEmployeesAsync()
     {
         List<Employee> employees = await context.Employees.ToListAsync();
         return employees;
     }
-
     public async Task<Employee> GetEmployeeAsync(string employeeId)
     {
         try
@@ -71,7 +66,6 @@ public class EmployeeRepository : IEmployeeRepository
             throw new TicketException("No such employee ID", 502);
         }
     }
-
     public async Task UpdateEmployeeAsync(string employeeId, Employee employee)
     {
         Employee emp2edit = await GetEmployeeAsync(employeeId);
@@ -89,22 +83,15 @@ public class EmployeeRepository : IEmployeeRepository
             throw new TicketException(sqlException.Message, 599);
         }
     }
-
-        
-public async Task<Employee> LoginAsync(string employeeId, string password)
-{
-    
-    Employee employee = await context.Employees
-        .FirstOrDefaultAsync(e => e.EmployeeId == employeeId);
-
-    if (employee == null)
-        throw new TicketException("Invalid Employee ID", 502);
-
-
-    if (employee.Password != password)
-        throw new TicketException("Invalid Password", 504);
-    return employee;
-}
-
+    public async Task<Employee> LoginAsync(string employeeId, string password)
+    {
+        Employee employee = await context.Employees
+            .FirstOrDefaultAsync(e => e.EmployeeId == employeeId);
+        if (employee == null)
+            throw new TicketException("Invalid Employee ID", 502);
+        if (employee.Password != password)
+            throw new TicketException("Invalid Password", 505);
+        return employee;
     }
+}
 
