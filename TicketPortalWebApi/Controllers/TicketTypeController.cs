@@ -12,18 +12,18 @@ namespace TicketPortalWebApi.Controllers
     [Authorize]
     public class TicketTypeController : ControllerBase
     {
-        ITicketTypeRepository _ticketTypeRepository;
+        ITicketTypeRepository ticketTypeRepo;
  
         public TicketTypeController(ITicketTypeRepository ticketTypeRepository)
         {
-            _ticketTypeRepository = ticketTypeRepository;
+            ticketTypeRepo = ticketTypeRepository;
         }
  
         [HttpGet]
         public async Task<ActionResult> GetAll()
         {
-            var ticketTypes = await _ticketTypeRepository.GetAllTicketTypesAsync();
-            return Ok(ticketTypes);
+            IEnumerable<TicketType> ticketTypes = await ticketTypeRepo.GetAllTicketTypesAsync();
+            return Ok(ticketTypes.ToList());
         }
  
         [HttpGet("{ticketTypeId}")]
@@ -33,14 +33,14 @@ namespace TicketPortalWebApi.Controllers
         {
             try
             {
-                var ticketType = await _ticketTypeRepository.GetTicketTypeAsync(ticketTypeId);
+                var ticketType = await ticketTypeRepo.GetTicketTypeAsync(ticketTypeId);
  
                 if (ticketType == null)
                     return NotFound("Ticket Type not found");
  
                 return Ok(ticketType);
             }
-            catch (Exception ex)
+            catch (TicketException ex)
             {
                 return NotFound(ex.Message);
             }
@@ -53,10 +53,10 @@ namespace TicketPortalWebApi.Controllers
         {
             try
             {
-                var createdTicketType = await _ticketTypeRepository.CreateTicketTypeAsync(ticketType);
+                var createdTicketType = await ticketTypeRepo.CreateTicketTypeAsync(ticketType);
                 return Created($"api/tickettype/{createdTicketType.TicketTypeId}", createdTicketType);
             }
-            catch (Exception ex)
+            catch (TicketException ex)
             {
                 return BadRequest(ex.Message);
             }
@@ -70,10 +70,10 @@ namespace TicketPortalWebApi.Controllers
         {
             try
             {
-                await _ticketTypeRepository.UpdateTicketTypeAsync(ticketTypeId, ticketType);
+                await ticketTypeRepo.UpdateTicketTypeAsync(ticketTypeId, ticketType);
                 return Ok(ticketType);
             }
-            catch (Exception ex)
+            catch (TicketException ex)
             {
                 if (ex.Message.Contains("not found"))
                     return NotFound(ex.Message);
@@ -90,10 +90,10 @@ namespace TicketPortalWebApi.Controllers
         {
             try
             {
-                await _ticketTypeRepository.DeleteTicketTypeAsync(ticketTypeId);
+                await ticketTypeRepo.DeleteTicketTypeAsync(ticketTypeId);
                 return Ok();
             }
-            catch (Exception ex)
+            catch (TicketException ex)
             {
                 if (ex.Message.Contains("not found"))
                     return NotFound(ex.Message);
