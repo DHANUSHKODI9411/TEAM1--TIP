@@ -1,9 +1,10 @@
 import { Component, signal } from '@angular/core';
 import { RouterOutlet } from '@angular/router';
+import { TicketTypeComponent } from './tickettype-component/tickettype-component';
 
 @Component({
   selector: 'app-root',
-  imports: [RouterOutlet],
+  imports: [RouterOutlet,TicketTypeComponent],
   templateUrl: './app.html',
   styleUrl: './app.css'
 })
