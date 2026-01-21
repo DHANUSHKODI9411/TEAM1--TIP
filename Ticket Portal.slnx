@@ -1,4 +1,5 @@
 <Solution>
+  <Folder Name="/FRONTEND/" />
   <Project Path="EFTicketPortalLibrary/EFTicketPortalLibrary.csproj" />
   <Project Path="TicketPortalWebApi/TicketPortalWebApi.csproj" />
 </Solution>
