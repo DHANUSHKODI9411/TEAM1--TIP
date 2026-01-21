@@ -1,0 +1,82 @@
+/* Main Layout Container */
+.main-container {
+  display: flex;
+  flex-direction: row;
+  gap: 40px;
+  padding: 20px;
+  align-items: flex-start;
+  font-family: Arial, sans-serif;
+}
+
+/* Left side takes fixed width */
+.form-column {
+  flex: 0 0 380px; 
+  background: #f9f9f9;
+  padding: 20px;
+  border: 1px solid #ddd;
+  border-radius: 8px;
+}
+
+/* Right side takes remaining space */
+.list-column {
+  flex: 1;
+  min-width: 0;
+}
+
+/* Scrollable table container */
+.table-wrapper {
+  max-height: 80vh; 
+  overflow-y: auto;
+  border: 1px solid #ddd;
+}
+
+table {
+  width: 100%;
+  border-collapse: collapse;
+}
+
+th, td {
+  padding: 12px;
+  text-align: left;
+}
+
+th {
+  background-color: #f2f2f2;
+  position: sticky;
+  top: 0;
+  z-index: 1;
+}
+
+/* Form Styling */
+input[type="text"], textarea {
+  width: 100%;
+  padding: 8px;
+  margin-top: 5px;
+  box-sizing: border-box;
+}
+
+.search-group {
+  display: flex;
+  gap: 10px;
+}
+
+.search-group input[type="text"] {
+  flex: 1;
+}
+
+.action-footer {
+  display: flex;
+  gap: 10px;
+  justify-content: space-between;
+}
+
+.error-text {
+  color: red;
+  font-size: 12px;
+  margin-top: 2px;
+}
+
+.err-msg {
+  color: red;
+  font-weight: bold;
+}

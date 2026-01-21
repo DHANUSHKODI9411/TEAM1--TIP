@@ -1,0 +1,63 @@
+<div class="main-container">
+  <div class="form-column">
+    <h2 style="color: #333;">Ticket Type</h2>
+
+    <form #ticketTypeForm="ngForm">
+      <div class="top-buttons">
+        <input type="button" value="New Ticket Type" (click)="newTicketType()" />
+        </div>
+      
+      <br />
+      <label>Ticket Type ID:</label><br />
+      <div class="search-group">
+        <input type="text" [(ngModel)]="ticketType.ticketTypeId" name="ticketTypeId" required maxlength="5" #typeId="ngModel" />
+        <input type="button" value="Show" (click)="showTicketType()" [disabled]="typeId.invalid" />
+      </div>
+      <br />
+
+      <label>Type Name:</label><br />
+      <input type="text" [(ngModel)]="ticketType.ticketTypeName" name="ticketTypeName" required #typeName="ngModel" />
+      <br />
+
+      <label>Description:</label><br />
+      <textarea [(ngModel)]="ticketType.description" name="description" rows="4"></textarea>
+      <br /><br />
+
+      <div class="action-footer">
+        <input type="button" value="Save" (click)="saveTicketType()" [disabled]="ticketTypeForm.invalid" />
+        <input type="button" value="Update" (click)="updateTicketType()" [disabled]="ticketTypeForm.invalid" />
+        <input type="button" value="Delete" (click)="deleteTicketType()" [disabled]="typeId.invalid" />
+      </div>
+    </form>
+    <p style="color: red; font-weight: bold;">{{ errMsg }}</p>
+  </div>
+
+  <div class="list-column" *ngIf="showList">
+    <h2 style="color: #333;">List of Ticket Types</h2>
+    <div class="table-wrapper">
+      <table border="1">
+        <thead>
+          <tr>
+            <th>ID</th>
+            <th>Name</th>
+            <th>Description</th>
+            <th>Action</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr *ngFor="let tt of ticketTypes">
+            <td>{{ tt.ticketTypeId }}</td>
+            <td>{{ tt.ticketTypeName }}</td>
+            <td>{{ tt.description }}</td> 
+            <td>
+              <button (click)="selectTicketType(tt)">Select</button>
+            </td>
+          </tr>
+          <tr *ngIf="ticketTypes.length === 0">
+            <td colspan="4" style="text-align: center; color: #666;">No ticket types found.</td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+  </div>
+</div>
