@@ -29,10 +29,10 @@ namespace EFTicketPortalLibrary.Models
         [StringLength(15, MinimumLength = 8, ErrorMessage = "Password must be between 8 to 15 characters")]
         public string Password { get; set; } = null!;
 
-        public enum RoleType { User, Admin }
-
-        [Required]
-        public RoleType Role { get; set; } = RoleType.User;
+        [Column(TypeName = "Varchar(20)")]
+        [Required(ErrorMessage = "Role cannot be null")]
+        [RegularExpression("^(User|Admin)$", ErrorMessage = "Role must be either 'User' or 'Admin'")]
+        public string Role { get; set; } = "User";
         
         public virtual ICollection<Ticket> CreatedTickets { get; set; } = new List<Ticket>();
         public virtual ICollection<Ticket> AssignedTickets { get; set; } = new List<Ticket>();
