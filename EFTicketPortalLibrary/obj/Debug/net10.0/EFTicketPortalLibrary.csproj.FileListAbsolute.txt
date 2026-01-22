@@ -1,0 +1,15 @@
+C:\Users\CR381GR\OneDrive - EY\Desktop\Ticket Portal Project\TEAM1--TIP\EFTicketPortalLibrary\bin\Debug\net10.0\EFTicketPortalLibrary.deps.json
+C:\Users\CR381GR\OneDrive - EY\Desktop\Ticket Portal Project\TEAM1--TIP\EFTicketPortalLibrary\bin\Debug\net10.0\EFTicketPortalLibrary.runtimeconfig.json
+C:\Users\CR381GR\OneDrive - EY\Desktop\Ticket Portal Project\TEAM1--TIP\EFTicketPortalLibrary\bin\Debug\net10.0\EFTicketPortalLibrary.dll
+C:\Users\CR381GR\OneDrive - EY\Desktop\Ticket Portal Project\TEAM1--TIP\EFTicketPortalLibrary\bin\Debug\net10.0\EFTicketPortalLibrary.pdb
+C:\Users\CR381GR\OneDrive - EY\Desktop\Ticket Portal Project\TEAM1--TIP\EFTicketPortalLibrary\obj\Debug\net10.0\EFTicketPortalLibrary.csproj.AssemblyReference.cache
+C:\Users\CR381GR\OneDrive - EY\Desktop\Ticket Portal Project\TEAM1--TIP\EFTicketPortalLibrary\obj\Debug\net10.0\EFTicketPortalLibrary.GeneratedMSBuildEditorConfig.editorconfig
+C:\Users\CR381GR\OneDrive - EY\Desktop\Ticket Portal Project\TEAM1--TIP\EFTicketPortalLibrary\obj\Debug\net10.0\EFTicketPortalLibrary.AssemblyInfoInputs.cache
+C:\Users\CR381GR\OneDrive - EY\Desktop\Ticket Portal Project\TEAM1--TIP\EFTicketPortalLibrary\obj\Debug\net10.0\EFTicketPortalLibrary.AssemblyInfo.cs
+C:\Users\CR381GR\OneDrive - EY\Desktop\Ticket Portal Project\TEAM1--TIP\EFTicketPortalLibrary\obj\Debug\net10.0\EFTicketPortalLibrary.csproj.CoreCompileInputs.cache
+C:\Users\CR381GR\OneDrive - EY\Desktop\Ticket Portal Project\TEAM1--TIP\EFTicketPortalLibrary\obj\Debug\net10.0\EFTicketPortalLibrary.sourcelink.json
+C:\Users\CR381GR\OneDrive - EY\Desktop\Ticket Portal Project\TEAM1--TIP\EFTicketPortalLibrary\obj\Debug\net10.0\EFTicketPortalLibrary.dll
+C:\Users\CR381GR\OneDrive - EY\Desktop\Ticket Portal Project\TEAM1--TIP\EFTicketPortalLibrary\obj\Debug\net10.0\refint\EFTicketPortalLibrary.dll
+C:\Users\CR381GR\OneDrive - EY\Desktop\Ticket Portal Project\TEAM1--TIP\EFTicketPortalLibrary\obj\Debug\net10.0\EFTicketPortalLibrary.pdb
+C:\Users\CR381GR\OneDrive - EY\Desktop\Ticket Portal Project\TEAM1--TIP\EFTicketPortalLibrary\obj\Debug\net10.0\EFTicketPortalLibrary.genruntimeconfig.cache
+C:\Users\CR381GR\OneDrive - EY\Desktop\Ticket Portal Project\TEAM1--TIP\EFTicketPortalLibrary\obj\Debug\net10.0\ref\EFTicketPortalLibrary.dll

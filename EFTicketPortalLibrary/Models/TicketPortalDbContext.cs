@@ -19,7 +19,7 @@ public class TicketPortalDbContext : DbContext
     {
         if (!optionsBuilder.IsConfigured)
         {
-            optionsBuilder.UseSqlServer("data source=DESKTOP-BO7RKUV\\SQLEXPRESS;database=TicketPortalDB;integrated security=true;TrustServerCertificate=true");
+            optionsBuilder.UseSqlServer("data source=localhost\\SQLEXPRESS;database=TicketPortalDB;integrated security=true;TrustServerCertificate=true");
         }
     }
 
