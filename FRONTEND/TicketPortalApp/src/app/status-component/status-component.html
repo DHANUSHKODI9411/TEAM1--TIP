@@ -11,8 +11,8 @@
 
     Is Active :
     <select [(ngModel)]="status.isActive" name="status.isActive">
-      <option [ngValue]="true">Active</option>
-      <option [ngValue]="false">Inactive</option>
+      <option [ngValue]="true">In Progress</option>
+      <option [ngValue]="false">Completed</option>
     </select> <br />
 
     <input type="button" value="Save" (click)="saveStatus()" /> &nbsp;
@@ -28,7 +28,7 @@
             <th>Status ID</th>
             <th>Status Name</th>
             <th>Description</th>
-            <th>Is Active</th>
+            <th>Status</th>
         </tr>
     </thead>
     <tbody>
@@ -36,7 +36,7 @@
             <td>{{ s.statusId }}</td>
             <td>{{ s.statusName }}</td>
             <td>{{ s.description || 'N/A' }}</td>
-            <td>{{ s.isActive ? 'Active' : 'Inactive' }}</td>
+            <td>{{ s.isActive ? 'In Progress' : 'Completed' }}</td>
         </tr>
     </tbody>
 </table>
