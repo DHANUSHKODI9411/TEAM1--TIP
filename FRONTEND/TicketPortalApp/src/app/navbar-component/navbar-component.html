@@ -1,73 +1,58 @@
-<nav class="main-nav">
+<nav class="navbar">
+  <div class="navbar-brand">
+    <a routerLink="/" routerLinkActive="active" class="navbar-title">
+      Ticket Portal
+    </a>
+  </div>
 
-    @if(username) {
+  <div class="navbar-menu">
+    <!-- Always visible links: Home -->
+    <a routerLink="/" routerLinkActive="active" class="nav-link">
+      Home
+    </a>
 
-        <div class="nav-container">
+    <!-- Conditional links based on authentication and role -->
+    @if (isAuthenticated()) {
+      <!-- Logged in user menu -->
+      @if (isAdmin()) {
+        <!-- Admin sees all tables -->
+        <a routerLink="/employee" routerLinkActive="active" class="nav-link">
+          Employee
+        </a>
+        <a routerLink="/status" routerLinkActive="active" class="nav-link">
+          Status
+        </a>
+        <a routerLink="/sla" routerLinkActive="active" class="nav-link">
+          SLA
+        </a>
+        <a routerLink="/tickettype" routerLinkActive="active" class="nav-link">
+          Ticket Type
+        </a>
+      }
 
-            <div class="nav-links">
-                <a routerLink="/"
-                   routerLinkActive="active"
-                   [routerLinkActiveOptions]="{ exact: true }">
-                   Home
-                </a>
+      <!-- All logged-in users see these -->
+      <a routerLink="/ticket" routerLinkActive="active" class="nav-link">
+        Ticket
+      </a>
+      <a routerLink="/ticketreplies" routerLinkActive="active" class="nav-link">
+        Ticket Replies
+      </a>
 
-                <a routerLink="/employee"
-                   routerLinkActive="active">
-                   Employee
-                </a>
-
-                <a routerLink="/ticket"
-                   routerLinkActive="active">
-                   Ticket
-                </a>
-
-                <a routerLink="/ticketreplies"
-                   routerLinkActive="active">
-                   Ticket Replies
-                </a>
-
-                <a routerLink="/tickettype"
-                   routerLinkActive="active">
-                   Ticket Type
-                </a>
-
-                <a routerLink="/status"
-                   routerLinkActive="active">
-                   Department
-                </a>
-
-                <a routerLink="/sla"
-                   routerLinkActive="active">
-                   SLA
-                </a>
-
-                <a routerLink="/logout"
-                   routerLinkActive="active">
-                   Logout
-                </a>
-            </div>
-
-            <div class="user-info">
-                <span class="welcome-text">Welcome,</span>
-                <span class="empId">{{ username }}</span>
-            </div>
-
-        </div>
+      <!-- User info and logout -->
+      <div class="user-section">
+        <span class="user-name">Hi, {{ empName() }}</span>
+        <a routerLink="/logout" routerLinkActive="active" class="nav-link logout-link" (click)="logout()">
+          Logout
+        </a>
+      </div>
+    } @else {
+      <!-- Not logged in - show Login/Register -->
+      <a routerLink="/login" routerLinkActive="active" class="nav-link">
+        Login
+      </a>
+      <a routerLink="/register" routerLinkActive="active" class="nav-link">
+        Register
+      </a>
     }
-
-    @else {
-
-        <div class="nav-container">
-            <div class="nav-links">
-
-                <a routerLink="/" routerLinkActive="active" [routerLinkActiveOptions]="{ exact: true }">Home</a>
-                &nbsp; &nbsp;
-                <a routerLink="/register" routerLinkActive="active-link">Register</a>
-                &nbsp; &nbsp;
-                <a routerLink="/login" routerLinkActive="active">Login</a>
-
-            </div>
-        </div>
-    }
-
+  </div>
 </nav>
