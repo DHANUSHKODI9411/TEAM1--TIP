@@ -10,15 +10,15 @@ import { NavbarComponent } from "../navbar-component/navbar-component";
 })
 export class HomeComponent {
   authSvc: AuthService = inject(AuthService);
-  token: string = "";
+
   constructor() {
+    if (sessionStorage.getItem('empName')) {
       this.authSvc.getToken().subscribe({
         next: (response: any) => {
-          this.token = response;
-          sessionStorage.setItem("token", this.token);
-          console.log(this.token);
+          sessionStorage.setItem("token", response);
         },
-        error: (err) => { alert(err.message); console.log(err); }
+        error: (err) => { console.error(err); }
       });
     }
+  }
 }
