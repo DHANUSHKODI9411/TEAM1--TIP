@@ -54,8 +54,11 @@
               placeholder="Enter reply text..."
               required></textarea>
 
-    <label>Reply Date:</label><br />
-    <input type="datetime-local" [(ngModel)]="reply.repliedDateStr" name="repliedDateStr" />
+    <label>Reply Date (Optional):</label><br />
+    <input type="datetime-local"
+          [ngModel]="formatDateToString(reply.repliedDate)"
+          (ngModelChange)="onDateChange($event)"
+          name="repliedDateStr" />
 
     <div class="action-footer">
       <input type="button"

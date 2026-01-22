@@ -176,4 +176,12 @@ export class TicketrepliesComponent implements OnInit {
     this.errMsg = '';
     return true;
   }
+  formatDateToString(date: Date): string {
+    return date.toISOString().slice(0, 16);
+  }
+  onDateChange(dateStr: string) {
+    if (dateStr) {
+      this.reply.repliedDate = new Date(dateStr);
+    }
+  }
 }
