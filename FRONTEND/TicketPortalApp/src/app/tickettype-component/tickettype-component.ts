@@ -5,11 +5,11 @@ import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
 
 @Component({
-  selector: 'app-ticket-type',
+  selector: 'app-tickettype',
   standalone: true,
   imports: [CommonModule, FormsModule],
-  templateUrl: './tickettype.component.html',
-  styleUrl: './tickettype.component.css',
+  templateUrl: './tickettype-component.html',
+  styleUrl: './tickettype-component.css',
 })
 export class TicketTypeComponent {
   ticketTypeSvc: TickettypeService = inject(TickettypeService);

@@ -1,0 +1,69 @@
+<div class="container">
+
+  <h2>SLA Management</h2>
+  <div *ngIf="errMsg" class="error-box">
+    {{ errMsg }}
+  </div>
+  <div class="form-card">
+    <h3>SLA Details</h3>
+    <form>
+      <label>SLA ID</label>
+      <input type="text"
+             [(ngModel)]="sla.slAid"
+             name="slAid"
+             maxlength="5"
+             placeholder="Enter SLA ID" />
+      <label>Ticket Type ID</label>
+      <input type="text"
+             [(ngModel)]="sla.ticketTypeId"
+             name="ticketTypeId"
+             maxlength="5"
+             placeholder="Enter Ticket Type ID" />
+      <label>Response Time (hrs)</label>
+      <input type="number"
+             [(ngModel)]="sla.responseTime"
+             name="responseTime"
+             placeholder="Enter Response Time" />
+      <label>Resolution Time (hrs)</label>
+      <input type="number"
+             [(ngModel)]="sla.resolutionTime"
+             name="resolutionTime"
+             placeholder="Enter Resolution Time" />
+      <label>Description</label>
+      <input type="text"
+             [(ngModel)]="sla.description"
+             name="description"
+             placeholder="Enter Description" />
+      <div class="button-row">
+        <button type="button" (click)="addSla()">Add</button>
+        <button type="button" (click)="updateSla()">Update</button>
+        <button type="button" (click)="deleteSla()">Delete</button>
+        <button type="button" (click)="getSla()">Get</button>
+        <button type="button" (click)="newSla()">Clear</button>
+      </div>
+    </form>
+  </div>
+  <div class="table-card">
+    <h3>All SLAs</h3>
+    <table>
+      <thead>
+        <tr>
+          <th>SLA ID</th>
+          <th>Ticket Type</th>
+          <th>Response Time</th>
+          <th>Resolution Time</th>
+          <th>Description</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr *ngFor="let s of slas">
+          <td>{{ s.slAid }}</td>
+          <td>{{ s.ticketTypeId }}</td>
+          <td>{{ s.responseTime }}</td>
+          <td>{{ s.resolutionTime }}</td>
+          <td>{{ s.description }}</td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+</div>

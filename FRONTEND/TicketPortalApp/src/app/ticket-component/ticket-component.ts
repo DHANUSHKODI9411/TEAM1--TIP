@@ -1,0 +1,74 @@
+import { Component ,inject} from '@angular/core';
+import { CommonModule } from '@angular/common';
+import { FormsModule } from '@angular/forms';
+import { TicketService } from '../services/ticket-service';
+import { Ticket } from '../../models/Ticket';
+
+@Component({
+  selector: 'app-ticket-component',
+  imports: [FormsModule,CommonModule],
+  templateUrl: './ticket-component.html',
+  styleUrl: './ticket-component.css',
+})
+export class TicketComponent {
+  private tckSrc = inject(TicketService);
+  ticket:Ticket;
+  tickets:Ticket[];
+  errMsg:string;
+  constructor(){
+    this.tickets=[];
+    this.ticket= new Ticket("","","","","","","");
+    this.errMsg="";
+    this.showalltickets();
+    }
+  newticket(){
+    this.ticket= new Ticket("","","","","","","",);
+  }
+  showalltickets(){
+    this.tckSrc.getalltickets().subscribe({
+      next:(response:any)=>{
+        this.tickets=response;
+        this.errMsg="";
+        console.log(response);
+      },
+      error:(err)=>{this.errMsg=err.error;console.log(err);}
+    })
+  }
+  showoneticket(){
+    this.tckSrc.getOneTicket(this.ticket.ticketId).subscribe({
+      next:(response:any)=>{
+        this.ticket=response;
+        this.errMsg="";
+      },
+      error:(err)=>{this.errMsg=err.error;console.log(err);}
+    })
+  }
+  addticket(){
+    this.tckSrc.addticket(this.ticket).subscribe({
+      next:(response:any)=>{
+        this.errMsg="";
+        this.showalltickets();
+      },
+      error:(err)=>{this.errMsg=err.error;console.log(err);}
+    })
+  }
+  updateticket(){
+    this.tckSrc.updateticket(this.ticket.ticketId,this.ticket).subscribe({
+      next:(response:any)=>{
+        this.errMsg="";
+        this.showalltickets();
+        this.newticket();
+      },
+      error:(err)=>{this.errMsg=err.error;console.log(err);}
+    })
+  }
+  deleteticket(){
+    this.tckSrc.deteleTicket(this.ticket.ticketId).subscribe({
+      next:(response:any)=>{
+        this.errMsg="";
+        this.showalltickets()
+      },
+      error:(err)=>{this.errMsg=err.error;console.log(err);}
+    })
+  }
+}

@@ -14,4 +14,13 @@ export class AuthService {
   getToken():Observable<string>{
     return this.http.get(this.baseUrl+this.userName+"/"+this.role+"/"+this.secretKey,{responseType:'text'});
   }
+  setLogin(empName: string) {
+    sessionStorage.setItem('empName', empName);
+    this.empNameSignal.set(empName);
+  }
+
+  logout() {
+    sessionStorage.clear();
+    this.empNameSignal.set(null);
+  }
 }

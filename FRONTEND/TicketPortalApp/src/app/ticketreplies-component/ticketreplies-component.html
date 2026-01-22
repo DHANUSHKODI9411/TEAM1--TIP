@@ -1,0 +1,44 @@
+<h2>Ticket Replies</h2>
+<hr>
+<label>Reply Id</label>
+<input type="text" [(ngModel)]="reply.replyId ">
+<button (click)="showTicketReply()">Show</button>
+<button (click)="showAllTicketReplies()">Show All</button>
+<hr>
+<label>Ticket Id</label>
+<input type="text" [(ngModel)]="reply.ticketId"><br/>
+<label>Created Employee Id</label>
+<input type="text" [(ngModel)]="reply.createdEmployeeId"><br/>
+<label>Assigned Employee Id</label>
+<input type="text" [(ngModel)]="reply.assignedEmployeeId"><br/>
+<label>Reply Text</label>
+<input type="text" [(ngModel)]="reply.replyText"><br/>
+<label>Replied Date</label>
+<input type="text" [(ngModel)]="reply.repliedDate">
+<br><br>
+<button type="button" (click)="addTicketReply()">Add</button>
+<button type="button" (click)="updateTicketReply()">Update</button>
+<button type="button"   (click)="deleteTicketReply()">Delete</button>
+<hr>
+
+<div style="color:red">{{ errMsg }}</div>
+<table>
+  <tr>
+    <th>ReplyId</th>
+    <th>TicketId</th>
+    <th>CreatedEmp</th>
+    <th>AssignedEmp</th>
+    <th>Text</th>
+    <th>Date</th>
+  </tr>
+@for (r of ticketreplies; track r.replyId) {
+  <tr>
+    <td>{{ r.replyId }}</td>
+    <td>{{ r.ticketId }}</td>
+    <td>{{ r.createdEmployeeId }}</td>
+    <td>{{ r.assignedEmployeeId ?? '-' }}</td>
+    <td>{{ r.replyText }}</td>
+    <td>{{ r.repliedDate | date:'short' }}</td>
+  </tr>
+}
+</table>

@@ -1,0 +1,57 @@
+<h2>Employee Form</h2>
+
+<!-- <form>
+  Employee ID:
+  <input type="text" [(ngModel)]="employee.employeeId" name="loginEmployeeId" /> <br /><br />
+  Password:
+  <input type="password" [(ngModel)]="employee.password" name="loginPassword" /> <br /><br />
+  <input type="button" value="Login" (click)="loginEmployee()" />
+</form>
+
+<h3>{{ errMsg }}</h3> -->
+
+<hr>
+<form>
+    <input type="button" value="new" (click)="newEmployee()" />
+    Employee ID:
+    <input type="text" [(ngModel)]="employee.employeeId" name="employee.employeeId" />
+    <input type="button" value="Show" (click)="showOneEmp()" /> <br /><br />
+
+    Employee Name:
+    <input type="text" [(ngModel)]="employee.employeeName" name="employee.employeeName" /> <br /><br />
+
+    Employee Email:
+    <input type="text" [(ngModel)]="employee.email" name="employee.email" /> <br /><br />
+
+    Role <input type="text" [(ngModel)]="employee.role" name="employee.role" /><br /><br />
+
+    Password <input type="password" [(ngModel)]="employee.password" name ="employee.password" /><br /><br />
+    <input type="button" value="Add" (click)="addEmployee()"/>
+    <input type="button" value="update" (click)="updateEmployee()"/>
+    <input type="button" value="delete" (click)="deleteEmployee()"/>
+
+</form>
+<h2>{{errMsg}}</h2>
+  <table border="1" cellpadding="8" cellspacing="0" style="width: 100%; border-collapse: collapse;">
+    <thead>
+      <tr>
+        <th>Employee ID</th>
+        <th>Name</th>
+        <th>Email</th>
+        <th>Role</th>
+      </tr>
+    </thead>
+
+    <tbody>
+      <tr *ngFor="let emp of employees">
+        <td>{{ emp.employeeId }}</td>
+        <td>{{ emp.employeeName }}</td>
+        <td>{{ emp.email }}</td>
+        <td>{{ emp.role}}</td>
+
+      </tr>
+    </tbody>
+  </table>
+
+
+

@@ -1,0 +1,8 @@
+<h2>Register New User</h2>
+<form #registerform="ngForm">
+    UserName: <input type="text" [(ngModel)]="user.employeeId" name="user.employeeId"/><br />
+    Password: <input type="password" [(ngModel)]="user.password" name="user.password"/><br />
+    <input type="button" value="submit" (click)="register()">
+
+</form>
+<p style="color: red;"{{errMsg}} ></p>
