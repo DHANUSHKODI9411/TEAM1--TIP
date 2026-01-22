@@ -7,7 +7,7 @@ import { Ticket } from '../../models/Ticket';
   providedIn: 'root',
 })
 export class TicketService {
-  http:HttpClient=inject(HttpClient);
+  /* http:HttpClient=inject(HttpClient);
   token;
   baseUrl:string="http://localhost:5106/api/Ticket/";
   httpOptions;
@@ -17,7 +17,17 @@ export class TicketService {
         'Authorization':'Bearer'+this.token
       })
     }
-  };
+  }; */
+  http: HttpClient = inject(HttpClient);
+  baseUrl: string = "http://localhost:5106/api/Ticket/";
+  private get httpOptions() {
+    const token = sessionStorage.getItem("token");
+    return {
+      headers: new HttpHeaders({
+        'Authorization': token ? `Bearer ${token}` : ''
+      })
+    };
+  }
   getalltickets():Observable<Ticket[]>{
     return this.http.get<Ticket[]>(this.baseUrl,this.httpOptions)
   }
@@ -30,7 +40,7 @@ export class TicketService {
   updateticket(ticketId:string,ticket:Ticket):Observable<Ticket>{
     return this.http.put<Ticket>(this.baseUrl+ticketId,ticket,this.httpOptions)
   }
-  deteleTicket(ticketId:string):Observable<any>{
+  deleteTicket(ticketId:string):Observable<any>{
     return this.http.delete(this.baseUrl+ticketId,this.httpOptions)
   }
   getTicketsByCreatedEmployee(createdEmployeeId: string): Observable<Ticket[]> {

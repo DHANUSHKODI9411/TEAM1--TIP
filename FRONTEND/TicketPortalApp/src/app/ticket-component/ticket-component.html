@@ -1,33 +1,111 @@
-<h2>Ticket Form</h2>
-<form>
-    <input type="button" value="new" (click)="newticket()"/><br />
-    Ticket Id <input type="text" [(ngModel)]="ticket.ticketId" name="ticket.ticketId"/>
-    <input type="button" value="show" (click)="showoneticket()"/><br /><br />
-    Title<input type="text" [(ngModel)]="ticket.title" name="ticket.title" /><br /><br />
-    Description <input type="text" [(ngModel)]="ticket.description" name="ticekt.description"/><br/><br />
-    Created Employee<input type="text"[(ngModel)]="ticket.createdEmployeeId" name="ticket.createdEmployeeId"/><br /><br />
-</form>
-<table border="1" cellpadding="8" cellspacing="0" style="width: 100%; border-collapse: collapse;">
-  <thead>
-    <tr>
-      <th>Ticket ID</th>
-      <th>Title</th>
-      <th>description</th>
-      <th>Created Employee Id</th>
-      <th>Ticket type Id</th>
-      <th>status Id</th>
-      <th>assignedEmployee</th>
-    </tr>
-  </thead>
-  <tbody>
-    <tr *ngFor="let tkt of tickets">
-      <td>{{ tkt.ticketId }}</td>
-      <td>{{ tkt.title}}</td>
-      <td>{{ tkt.description}}</td>
-      <td>{{ tkt.createdEmployeeId}}</td>
-      <td>{{tkt.ticketTypeId}}</td>
-      <td>{{tkt.statusId}}</td>
-      <td>{{tkt.assignedEmployeeId}}</td>
-    </tr>
-  </tbody>
-</table>
+<div class="main-container">
+  <p style="color: red; font-weight: bold;">{{ errMsg }}</p>
+
+  <h2>Ticket Form</h2>
+  <form #ticketForm="ngForm">
+    <div class="top-buttons">
+      <input type="button" value="New" (click)="newticket()" />
+    </div>
+    <label>Ticket ID:</label>
+    <div class="search-group">
+      <input type="text"
+             [(ngModel)]="ticket.ticketId"
+             name="ticketId"
+             maxlength="5"
+             required
+             #ticketId="ngModel" />
+      <input type="button"
+             value="Show"
+             (click)="showoneticket()"
+             [disabled]="ticketId.invalid || !ticket.ticketId" />
+    </div>
+    <label>Title:</label><br />
+    <input type="text"
+           [(ngModel)]="ticket.title"
+           name="title"
+           maxlength="200"
+           required />
+    <label>Description:</label><br />
+    <textarea [(ngModel)]="ticket.description"
+              name="description"
+              rows="4"
+              cols="50"
+              maxlength="4000"
+              placeholder="Enter ticket description..."></textarea>
+    <br />
+    <label>Created Employee:</label><br />
+    <select [(ngModel)]="ticket.createdEmployeeId" name="createdEmployeeId" required>
+      <option value="">Select Employee...</option>
+      <option *ngFor="let emp of employees" [value]="emp.employeeId">
+        {{ emp.employeeName }} ({{ emp.employeeId }})
+      </option>
+    </select>
+    <label>Ticket Type:</label><br />
+    <select [(ngModel)]="ticket.ticketTypeId" name="ticketTypeId" required>
+      <option value="">Select Type...</option>
+      <option *ngFor="let type of ticketTypes" [value]="type.ticketTypeId">
+        {{ type.ticketTypeName }}
+      </option>
+    </select>
+    <label>Status:</label><br />
+    <select [(ngModel)]="ticket.statusId" name="statusId" required>
+      <option value="">Select Status...</option>
+      <option *ngFor="let status of statuses" [value]="status.statusId">
+        {{ status.statusName }}
+      </option>
+    </select>
+    <label>Assigned Employee (Optional):</label><br />
+    <select [(ngModel)]="ticket.assignedEmployeeId" name="assignedEmployeeId">
+      <option value="">Unassigned</option>
+      <option *ngFor="let emp of employees" [value]="emp.employeeId">
+        {{ emp.employeeName }} ({{ emp.employeeId }})
+      </option>
+    </select>
+    <div class="action-footer">
+      <input type="button"
+             value="Save"
+             (click)="addticket()"
+             [disabled]="ticketForm.invalid" />
+      <input type="button"
+             value="Update"
+             (click)="updateticket()"
+             [disabled]="ticketForm.invalid || !ticket.ticketId" />
+      <input type="button"
+             value="Delete"
+             (click)="deleteticket()"
+             [disabled]="!ticket.ticketId" />
+    </div>
+  </form>
+  <h2>List of Tickets</h2>
+  <div class="table-wrapper">
+    <table border="1" cellpadding="8" cellspacing="0" style="width: 100%; border-collapse: collapse;">
+      <thead>
+        <tr>
+          <th>Ticket ID</th>
+          <th>Title</th>
+          <th>Description</th>
+          <th>Created By</th>
+          <th>Ticket Type</th>
+          <th>Status</th>
+          <th>Assigned To</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr *ngFor="let tkt of tickets">
+          <td>{{ tkt.ticketId }}</td>
+          <td>{{ tkt.title || 'N/A' }}</td>
+          <td>{{ (tkt.description || 'No description') | slice:0:50 }}{{ tkt.description && tkt.description.length > 50 ? '...' : '' }}</td>
+          <td>{{ tkt.createdEmployeeId }}</td>
+          <td>{{ tkt.ticketTypeId }}</td>
+          <td>{{ tkt.statusId }}</td>
+          <td>{{ tkt.assignedEmployeeId || 'Unassigned' }}</td>
+        </tr>
+        <tr *ngIf="tickets.length === 0">
+          <td colspan="7" style="text-align: center; color: #666;">
+            No tickets found.
+          </td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+</div>

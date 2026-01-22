@@ -18,22 +18,22 @@ export class SlaService{
     })};
   }
   getAllSlas(): Observable<SLA[]> {
-  return this.http.get<SLA[]>(this.baseUrl);
+    return this.http.get<SLA[]>(this.baseUrl, this.httpOptions);
   }
 
   getSla(slAid: string): Observable<SLA> {
-    return this.http.get<SLA>(this.baseUrl+slAid);
+    return this.http.get<SLA>(this.baseUrl + slAid, this.httpOptions);
   }
 
   addSla(sla: any): Observable<SLA> {
-    return this.http.post<SLA>(this.baseUrl, sla);
+    return this.http.post<SLA>(this.baseUrl, sla, this.httpOptions);
   }
 
-  updateSla(slAidid: string, sla:SLA): Observable<SLA> {
-    return this.http.put<SLA>(this.baseUrl+sla.slAid, sla);
+  updateSla(slAid: string, sla:SLA): Observable<SLA> {
+    return this.http.put<SLA>(this.baseUrl+slAid, sla, this.httpOptions);
   }
 
   deleteSla(slAid: string): Observable<any> {
-    return this.http.delete(this.baseUrl+slAid);
+    return this.http.delete(this.baseUrl+slAid, this.httpOptions);
   }
 }

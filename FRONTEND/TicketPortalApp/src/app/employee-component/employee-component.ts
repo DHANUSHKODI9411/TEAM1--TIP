@@ -27,6 +27,11 @@ export class EmployeeComponent {
     this.employee = new Employee("","","","","User");
   }
   showAllEmp(){
+    const token = sessionStorage.getItem('token');
+    if (!token) {
+      this.errMsg = 'Please login first';
+      return;
+    }
     this.EmpSrvc.getallemployees().subscribe({
       next:(response:any)=>{
         this.employees=response;

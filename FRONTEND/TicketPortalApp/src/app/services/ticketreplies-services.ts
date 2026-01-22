@@ -7,17 +7,18 @@ import { TicketReplies } from '../../models/TicketReplies';
   providedIn: 'root',
 })
 export class TicketrepliesServices {
-
   http: HttpClient = inject(HttpClient);
-  baseUrl: string = 'http://localhost:5106/api/TicketReplies/';
-  token;
-  httpOptions;
-  constructor(){
-    this.token = sessionStorage.getItem("token")
-    this.httpOptions = {headers: new HttpHeaders ({
-      'Authorization': 'Bearer ' + this.token
-    })};
-  }
+    baseUrl: string = "http://localhost:5106/api/TicketReplies/";
+
+    // ✅ DYNAMIC TOKEN - Refreshes every API call
+    private get httpOptions() {
+      const token = sessionStorage.getItem("token");
+      return {
+        headers: new HttpHeaders({
+          'Authorization': token ? `Bearer ${token}` : ''
+        })
+      };
+    }
   addTicketReply(reply: TicketReplies): Observable<TicketReplies>{
     return this.http.post<TicketReplies>(this.baseUrl, reply, this.httpOptions);
   }

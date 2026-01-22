@@ -7,17 +7,16 @@ import { Employee } from '../../models/Employee';
   providedIn: 'root',
 })
 export class EmployeeService {
-  http:HttpClient=inject(HttpClient);
-  token;
-  baseUrl:string="http://localhost:5106/api/Employee/";
-  httpOptions;
-  constructor(){this.token=sessionStorage.getItem("token");
-    this.httpOptions={
-      headers:new HttpHeaders({
-        'Authorization':'Bearer'+this.token
+  http: HttpClient = inject(HttpClient);
+  baseUrl: string = "http://localhost:5106/api/Employee/";
+  private get httpOptions() {
+    const token = sessionStorage.getItem("token");
+    return {
+      headers: new HttpHeaders({
+        'Authorization': token ? `Bearer ${token}` : ''
       })
-    }
-  };
+    };
+  }
   getallemployees():Observable<Employee[]>{
     return this.http.get<Employee[]>(this.baseUrl,this.httpOptions)
   }
