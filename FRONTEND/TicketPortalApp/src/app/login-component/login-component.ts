@@ -12,33 +12,6 @@ import { AuthService } from '../auth-service';
   templateUrl: './login-component.html',
   styleUrl: './login-component.css',
 })
-/* export class LoginComponent {
-  loginSvc: LoginService = inject(LoginService);
-  router: Router = inject(Router);
-  employeeId: string;
-  password: string;
-  user!: Employee;
-  errMsg: string;
-  constructor() {
-    this.employeeId = "";
-    this.password = "";
-    this.errMsg = "";
-  }
-  login() {
-    this.loginSvc.login(this.employeeId, this.password).subscribe({
-      next: (response: Employee) => {
-        this.user = response;
-        sessionStorage.setItem("employeeId", this.user.employeeId);
-        sessionStorage.setItem("role", this.user.role);
-        alert("Login succesfully")
-        this.errMsg = "";
-        this.router.navigate(['/']);
-      },
-      error: (err) => {this.errMsg = err.error;console.log("Login error:", err);
-      }
-    });
-  }
-} */
 export class LoginComponent {
   EmpSvc:EmployeeService=inject(EmployeeService);
   authSvc:AuthService=inject(AuthService);

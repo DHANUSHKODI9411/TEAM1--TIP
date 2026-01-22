@@ -1,31 +1,59 @@
 import { Component, inject } from '@angular/core';
-import { RegisterService } from '../register-service';
+import { RegisterService } from '../register-service';  // ✅ Fix service name
 import { FormsModule } from '@angular/forms';
 import { CommonModule } from '@angular/common';
 import { Employee } from '../../models/Employee';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-register-component',
-  imports: [FormsModule,CommonModule],
+  imports: [FormsModule, CommonModule],
   templateUrl: './register-component.html',
   styleUrl: './register-component.css',
 })
 export class RegisterComponent {
-  regsiterSvc: RegisterService = inject(RegisterService);
+  registerSvc: RegisterService = inject(RegisterService);  // ✅ Fixed typo
   user: Employee;
-  errMsg: string;
+  errMsg: string = '';
+  router: Router = inject(Router);
+
   constructor() {
-    this.user = new Employee("","","","","");
-    this.errMsg = "";
+    // ✅ Proper initialization with empty strings
+    this.user = {
+      employeeId: '',
+      employeeName: '',
+      email: '',
+      password: '',
+      role: 'User'
+    };
+    this.errMsg = '';
   }
+
   register() {
-    this.regsiterSvc.register(this.user).subscribe({
+    // ✅ Validate before API call
+    if (!this.user.employeeId || this.user.employeeId.length !== 5) {
+      this.errMsg = 'Employee ID must be exactly 5 characters (e.g., EMP01)';
+      return;
+    }
+
+    this.registerSvc.register(this.user).subscribe({
       next: (response: any) => {
-        alert("New user registered");
-        this.errMsg = "";
+        alert("New user registered successfully!");
+        this.errMsg = '';
+        this.router.navigate(['/']);  // Navigate to home
+        this.user = { employeeId: '', employeeName: '', email: '', password: '', role: 'User' };
       },
-     error: (err) => {this.errMsg = err.error ; console.log(err);}
+      error: (err) => {
+        console.log('Register error:', err);
+        // ✅ Handle validation errors properly
+        if (err.status === 400 && err.error?.errors) {
+          // Model validation errors
+          const errors = err.error.errors;
+          this.errMsg = Object.values(errors).flat().join(', ');
+        } else {
+          this.errMsg = err.error?.Message || err.message || 'Registration failed';
+        }
+      }
     });
   }
 }
-

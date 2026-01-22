@@ -1,8 +1,42 @@
-<h2>Register New User</h2>
-<form #registerform="ngForm">
-    UserName: <input type="text" [(ngModel)]="user.employeeId" name="user.employeeId"/><br />
-    Password: <input type="password" [(ngModel)]="user.password" name="user.password"/><br />
-    <input type="button" value="submit" (click)="register()">
+<div class="register-form">
+  <h2>Register New Employee</h2>
 
-</form>
-<p style="color: red;"{{errMsg}} ></p>
+  <div *ngIf="errMsg" style="color: red; margin: 10px 0;">
+    {{ errMsg }}
+  </div>
+
+  <form #regForm="ngForm">
+    <div>
+      <label>Employee ID (exactly 5 chars):</label><br>
+      <input type="text" [(ngModel)]="user.employeeId" name="employeeId"
+             maxlength="5" placeholder="EMP01" required />
+    </div>
+
+    <div>
+      <label>Employee Name:</label><br>
+      <input type="text" [(ngModel)]="user.employeeName" name="employeeName"
+             maxlength="50" required />
+    </div>
+
+    <div>
+      <label>Email:</label><br>
+      <input type="email" [(ngModel)]="user.email" name="email"
+             maxlength="100" placeholder="suresh@ey.com" required />
+    </div>
+
+    <div>
+      <label>Password (8-15 chars):</label><br>
+      <input type="password" [(ngModel)]="user.password" name="password"
+             minlength="8" maxlength="15" required />
+    </div>
+
+    <div style="margin-top: 20px;">
+      <button type="button" (click)="register()" [disabled]="regForm.invalid">
+        Register
+      </button>
+      <button type="button" (click)="user = {employeeId:'',employeeName:'',email:'',password:'',role:'User'}">
+        Reset
+      </button>
+    </div>
+  </form>
+</div>
