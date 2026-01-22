@@ -40,6 +40,7 @@ public class EmployeeController : ControllerBase
         }
     }
     [HttpPost]
+    [AllowAnonymous]
     [ProducesResponseType(201)]
     [ProducesResponseType(400)]
     public async Task<ActionResult> Add(Employee employee)
@@ -93,16 +94,16 @@ public class EmployeeController : ControllerBase
             return BadRequest(ex.Message);
         }
     }
-    [HttpGet("{employeeId}/{password}")]
+    [HttpGet("login/{employeeId}/{password}")]
     [ProducesResponseType(200)]
     [ProducesResponseType(400)]
     [ProducesResponseType(401)]
     [AllowAnonymous]
-    public async Task<ActionResult<Employee>> Login(string empId, string password)
+    public async Task<ActionResult> Login(string employeeId, string password)
     {
         try
         {
-            Employee employee = await empRepo.LoginAsync(empId, password);
+            var employee = await empRepo.LoginAsync(employeeId, password);
             return Ok(employee);
         }
         catch (TicketException ex)
@@ -111,6 +112,8 @@ public class EmployeeController : ControllerBase
                 return Unauthorized(ex.Message);
             if (ex.ErrorNumber == 502)
                 return NotFound(ex.Message);
+            if (ex.ErrorNumber == 504)
+                return BadRequest(ex.Message);
             return BadRequest(ex.Message);
         }
     }
