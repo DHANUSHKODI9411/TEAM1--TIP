@@ -10,6 +10,7 @@ import { AuthService } from './auth-service';
 import { SLAComponent } from './sla-component/sla-component';
 import { TicketComponent } from './ticket-component/ticket-component';
 import { TicketrepliesComponent } from './ticketreplies-component/ticketreplies-component';
+import { NavbarComponent } from './navbar-component/navbar-component';
 
 @Component({
   selector: 'app-root',
@@ -22,6 +23,7 @@ import { TicketrepliesComponent } from './ticketreplies-component/ticketreplies-
     SLAComponent,
     TicketComponent,
     TicketrepliesComponent,
+    NavbarComponent,
   ],
   templateUrl: './app.html',
   styleUrl: './app.css'
