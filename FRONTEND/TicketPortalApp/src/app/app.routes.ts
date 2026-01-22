@@ -5,8 +5,10 @@ import { EmployeeComponent } from './employee-component/employee-component';
 import { HomeComponent } from './home-component/home-component';
 import { LoginComponent } from './login-component/login-component';
 import { LogoutComponent } from './logout-component/logout-component';
-import { NavbarComponent } from './navbar-component/navbar-component';
 import { RegisterComponent } from './register-component/register-component';
+import { SLAComponent } from './sla-component/sla-component';
+import { TicketComponent } from './ticket-component/ticket-component';
+import { TicketrepliesComponent } from './ticketreplies-component/ticketreplies-component';
 
 export const routes: Routes = [
   {path: '', component: HomeComponent},
@@ -16,5 +18,7 @@ export const routes: Routes = [
   { path: 'tickettype',component: TicketTypeComponent},
   { path: 'status', component: StatusComponent },
   { path: 'employee', component: EmployeeComponent },
-  { path: 'navbar', component: NavbarComponent }
+  { path: 'sla', component: SLAComponent },
+  { path: 'ticket', component: TicketComponent },
+  { path: 'ticketreplies', component: TicketrepliesComponent },
 ];

@@ -1,9 +1,16 @@
-
-<!-- <app-employee-component></app-employee-component>
-<app-status-component></app-status-component>
-<app-tickettype></app-tickettype>
-<router-outlet></router-outlet>
- -->
-<app-home-component></app-home-component>
-<app-navbar-component></app-navbar-component>
+@if(auth.empNameSignal()){
+    <a routerLink="" routerLinkActive="active">Home</a>&nbsp;&nbsp;
+    <a routerLink="/ticket" routerLinkActive="active">Ticket</a>&nbsp;&nbsp;
+    <a routerLink="/status" routerLinkActive="active">Status</a>&nbsp;&nbsp;
+    <a routerLink="/sla" routerLinkActive="active">SLA</a>&nbsp;&nbsp;
+    <a routerLink="/tickettype" routerLinkActive="active">Ticket Type</a> &nbsp;&nbsp;
+    <a routerLink="/employee" routerLinkActive="active">Employee</a>&nbsp;&nbsp;
+    <a routerLink="/ticketreplies" routerLinkActive="active">Ticket Replies</a>&nbsp;&nbsp;
+    <a routerLink="/logout" routerLinkActive="active">Logout</a>
+}
+@else {
+    <a routerLink="" routerLinkActive="active">Home</a>&nbsp;
+    <a routerLink="/register" routerLinkActive="active">Register</a>&nbsp;
+    <a routerLink="/login" routerLinkActive="active">Login</a>&nbsp;
+}
 <router-outlet></router-outlet>
