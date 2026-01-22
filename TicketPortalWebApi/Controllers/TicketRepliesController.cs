@@ -1,11 +1,13 @@
 using EFTicketPortalLibrary.Models;
 using EFTicketPortalLibrary.Repos;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
  
 namespace TicketPortalWebApi.Controllers
 {
     [Route("api/[controller]")]
     [ApiController]
+    [Authorize]
     public class TicketRepliesController : ControllerBase
     {
         private readonly ITicketRepliesRepository ticketrepliesRepo;
