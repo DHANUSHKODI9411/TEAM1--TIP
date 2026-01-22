@@ -1,111 +1,30 @@
-<div class="main-container">
-  <p style="color: red; font-weight: bold;">{{ errMsg }}</p>
+<!-- Role radio buttons + dynamic ID display -->
+<div class="role-box">
+  <label>
+    <input type="radio"
+           name="viewRole"
+           [(ngModel)]="viewRole"
+           value="creator">
+    Creator
+  </label>
 
-  <h2>Ticket Replies Form</h2>
-  <form #replyForm="ngForm">
-    <div class="top-buttons">
-      <input type="button" value="New" (click)="newTicketReply()" />
-    </div>
+  <label>
+    <input type="radio"
+           name="viewRole"
+           [(ngModel)]="viewRole"
+           value="assignee">
+    Assignee
+  </label>
+</div>
 
-    <label>Reply ID:</label>
-    <div class="search-group">
-      <input type="text"
-             [(ngModel)]="reply.replyId"
-             name="replyId"
-             maxlength="10"
-             required
-             #replyId="ngModel" />
-      <input type="button"
-             value="Show"
-             (click)="showTicketReply()"
-             [disabled]="replyId.invalid || !reply.replyId" />
-    </div>
+<div class="who-box" *ngIf="reply?.replyId">
+  <ng-container *ngIf="viewRole === 'creator'">
+    <b>Assigned Employee ID:</b>
+    <span>{{ reply.assignedEmployeeId || 'Unassigned' }}</span>
+  </ng-container>
 
-    <label>Ticket ID:</label><br />
-    <select [(ngModel)]="reply.ticketId" name="ticketId" required>
-      <option value="">Select Ticket...</option>
-      <option *ngFor="let ticket of tickets" [value]="ticket.ticketId">
-        {{ ticket.ticketId }} - {{ ticket.title }}
-      </option>
-    </select>
-
-    <label>Created Employee:</label><br />
-    <select [(ngModel)]="reply.createdEmployeeId" name="createdEmployeeId" required>
-      <option value="">Select Employee...</option>
-      <option *ngFor="let emp of employees" [value]="emp.employeeId">
-        {{ emp.employeeName }} ({{ emp.employeeId }})
-      </option>
-    </select>
-
-    <label>Assigned Employee (Optional):</label><br />
-    <select [(ngModel)]="reply.assignedEmployeeId" name="assignedEmployeeId">
-      <option value="">Unassigned</option>
-      <option *ngFor="let emp of employees" [value]="emp.employeeId">
-        {{ emp.employeeName }} ({{ emp.employeeId }})
-      </option>
-    </select>
-
-    <label>Reply Text:</label><br />
-    <textarea [(ngModel)]="reply.replyText"
-              name="replyText"
-              rows="4"
-              cols="50"
-              maxlength="1000"
-              placeholder="Enter reply text..."
-              required></textarea>
-
-    <label>Reply Date (Optional):</label><br />
-    <input type="datetime-local"
-          [ngModel]="formatDateToString(reply.repliedDate)"
-          (ngModelChange)="onDateChange($event)"
-          name="repliedDateStr" />
-
-    <div class="action-footer">
-      <input type="button"
-             value="Save"
-             (click)="addTicketReply()"
-             [disabled]="replyForm.invalid" />
-      <input type="button"
-             value="Update"
-             (click)="updateTicketReply()"
-             [disabled]="replyForm.invalid || !reply.replyId" />
-      <input type="button"
-             value="Delete"
-             (click)="deleteTicketReply()"
-             [disabled]="!reply.replyId" />
-    </div>
-  </form>
-
-  <h2>List of Ticket Replies</h2>
-  <div class="table-wrapper">
-    <table border="1" cellpadding="8" cellspacing="0" style="width: 100%; border-collapse: collapse;">
-      <thead>
-        <tr>
-          <th>Reply ID</th>
-          <th>Ticket ID</th>
-          <th>Description</th>
-          <th>Created By</th>
-          <th>Assigned To</th>
-          <th>Reply Text</th>
-          <th>Date</th>
-        </tr>
-      </thead>
-      <tbody>
-        <tr *ngFor="let r of ticketreplies; trackBy: trackByReplyId">
-          <td>{{ r.replyId }}</td>
-          <td>{{ r.ticketId }}</td>
-          <td>{{ r.replyText || 'N/A' }}</td>
-          <td>{{ r.createdEmployeeId }}</td>
-          <td>{{ r.assignedEmployeeId || 'Unassigned' }}</td>
-          <td>{{ (r.replyText || 'No text') | slice:0:50 }}{{ r.replyText && r.replyText.length > 50 ? '...' : '' }}</td>
-          <td>{{ r.repliedDate | date:'short' }}</td>
-        </tr>
-        <tr *ngIf="ticketreplies.length === 0">
-          <td colspan="7" style="text-align: center; color: #666;">
-            No ticket replies found.
-          </td>
-        </tr>
-      </tbody>
-    </table>
-  </div>
+  <ng-container *ngIf="viewRole === 'assignee'">
+    <b>Creator Employee ID:</b>
+    <span>{{ reply.createdEmployeeId }}</span>
+  </ng-container>
 </div>

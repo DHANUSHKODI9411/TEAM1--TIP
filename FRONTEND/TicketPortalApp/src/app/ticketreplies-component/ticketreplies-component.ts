@@ -41,7 +41,6 @@ export class TicketrepliesComponent implements OnInit {
 
   ngOnInit(): void {
     this.loadDropdownData();
-    this.showAllTicketReplies();
   }
 
   // ✅ LOAD DROPDOWNS
