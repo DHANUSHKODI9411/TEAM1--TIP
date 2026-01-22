@@ -1,5 +1,5 @@
 import { Component, inject } from '@angular/core';
-import { TickettypeService } from '../services/tickettype-service';
+import { TickettypeService } from '../services/tickettype-services';
 import { TicketType } from '../../models/TicketType';
 import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
