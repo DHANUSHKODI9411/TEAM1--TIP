@@ -5,7 +5,7 @@ using System.ComponentModel.DataAnnotations.Schema;
 
 namespace EFTicketPortalLibrary.Models;
 
-[Table("TICKET-TYPE")]
+[Table("TicketType")]
 public class TicketType
 {
     [Key]
