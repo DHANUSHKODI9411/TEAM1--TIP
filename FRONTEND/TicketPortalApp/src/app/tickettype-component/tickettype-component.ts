@@ -56,7 +56,7 @@ export class TicketTypeComponent {
         this.ticketType = response;
         this.errMsg = "";
       },
-      error: (err) => { this.errMsg = err.message; }
+       error: (err) => this.errMsg = err.error
     });
   }
 

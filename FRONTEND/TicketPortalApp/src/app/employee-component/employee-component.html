@@ -1,46 +1,164 @@
-<h2>Employee Form</h2>
-<hr>
-<form>
-    <input type="button" value="new" (click)="newEmployee()" />
-    Employee ID:
-    <input type="text" [(ngModel)]="employee.employeeId" name="employee.employeeId" />
-    <input type="button" value="Show" (click)="showOneEmp()" /> <br /><br />
+<div class="tr-page">
 
-    Employee Name:
-    <input type="text" [(ngModel)]="employee.employeeName" name="employee.employeeName" /> <br /><br />
+  <!-- HEADER -->
+  <div class="tr-header">
+    <div>
+      <h2>Employee Directory</h2>
+      <p class="sub">Manage your workforce records with the same portal layout.</p>
+    </div>
 
-    Employee Email:
-    <input type="text" [(ngModel)]="employee.email" name="employee.email" /> <br /><br />
+    <div class="err" *ngIf="errMsg">{{ errMsg }}</div>
+  </div>
 
-    Role <input type="text" [(ngModel)]="employee.role" name="employee.role" /><br /><br />
+  <div class="page-container">
 
-    Password <input type="password" [(ngModel)]="employee.password" name ="employee.password" /><br /><br />
-    <input type="button" value="Add" (click)="addEmployee()"/>
-    <input type="button" value="update" (click)="updateEmployee()"/>
-    <input type="button" value="delete" (click)="deleteEmployee()"/>
+    <!-- ===================== LEFT : FORM ===================== -->
+    <div class="form-section card-glass">
 
-</form>
-<h2>{{errMsg}}</h2>
-  <table border="1" cellpadding="8" cellspacing="0" style="width: 100%; border-collapse: collapse;">
-    <thead>
-      <tr>
-        <th>Employee ID</th>
-        <th>Name</th>
-        <th>Email</th>
-        <th>Role</th>
-      </tr>
-    </thead>
+      <div class="card-title">
+        <span class="dot"></span>
+        <h3>Employee Editor</h3>
+      </div>
 
-    <tbody>
-      <tr *ngFor="let emp of employees">
-        <td>{{ emp.employeeId }}</td>
-        <td>{{ emp.employeeName }}</td>
-        <td>{{ emp.email }}</td>
-        <td>{{ emp.role}}</td>
+      <!-- New button top (like Ticket) -->
+      <div class="top-actions">
+        <button type="button" class="btn ghost" (click)="newEmployee()">New</button>
+      </div>
 
-      </tr>
-    </tbody>
-  </table>
+      <form #empForm="ngForm">
 
+        <div class="grid">
 
+          <!-- Employee ID + Find inline -->
+          <div class="field">
+            <label>Employee ID</label>
 
+            <div class="inline-row">
+              <input class="inp"
+                     type="text"
+                     [(ngModel)]="employee.employeeId"
+                     name="employeeId"
+                     maxlength="10"
+                     required
+                     #eid="ngModel"
+                     placeholder="Enter Employee ID">
+
+              <button type="button"
+                      class="btn ghost"
+                      (click)="showOneEmp()"
+                      [disabled]="eid.invalid">
+                Show
+              </button>
+            </div>
+          </div>
+
+          <div class="field">
+            <label>Full Name</label>
+            <input class="inp"
+                   type="text"
+                   [(ngModel)]="employee.employeeName"
+                   name="employeeName"
+                   placeholder="e.g. John Doe"
+                   required>
+          </div>
+
+          <div class="field">
+            <label>Email Address</label>
+            <input class="inp"
+                   type="text"
+                   [(ngModel)]="employee.email"
+                   name="email"
+                   placeholder="john@company.com">
+          </div>
+
+          <div class="field">
+            <label>Designated Role</label>
+            <input class="inp"
+                   type="text"
+                   [(ngModel)]="employee.role"
+                   name="role"
+                   placeholder="e.g. Senior Lead">
+          </div>
+
+          <div class="field">
+            <label>Access Password</label>
+            <input class="inp"
+                   type="password"
+                   [(ngModel)]="employee.password"
+                   name="password"
+                   placeholder="••••••••">
+          </div>
+
+        </div>
+
+        <!-- Bottom action buttons -->
+        <div class="action-row">
+          <button type="button"
+                  class="btn primary"
+                  (click)="addEmployee()"
+                  [disabled]="empForm.invalid">
+            Save
+          </button>
+
+          <button type="button"
+                  class="btn"
+                  (click)="updateEmployee()"
+                  [disabled]="!employee.employeeId">
+            Update
+          </button>
+
+          <button type="button"
+                  class="btn danger"
+                  (click)="deleteEmployee()"
+                  [disabled]="!employee.employeeId">
+            Delete
+          </button>
+        </div>
+
+      </form>
+
+      <div class="tip">
+        💡 Tip: Use <b>Show</b> to load an employee and then update/delete.
+      </div>
+
+    </div>
+
+    <!-- ===================== RIGHT : TABLE ===================== -->
+    <div class="table-section">
+
+      <div class="topbar card-glass">
+        <div>
+          <h3 class="list-title">Employees List</h3>
+          <p class="muted">All employee records.</p>
+        </div>
+      </div>
+
+      <div class="table-wrap card-glass">
+        <table class="cool-table">
+          <thead>
+            <tr>
+              <th>ID</th>
+              <th>Employee Name</th>
+              <th>Email</th>
+              <th>Role</th>
+            </tr>
+          </thead>
+
+          <tbody>
+            <tr *ngFor="let emp of employees">
+              <td><span class="pill">{{ emp.employeeId }}</span></td>
+              <td>{{ emp.employeeName }}</td>
+              <td>{{ emp.email }}</td>
+              <td><span class="pill pill2">{{ emp.role }}</span></td>
+            </tr>
+
+            <tr *ngIf="!employees || employees.length === 0">
+              <td colspan="4" class="empty">📭 No employees found</td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+
+    </div>
+  </div>
+</div>

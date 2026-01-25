@@ -1,61 +1,152 @@
-<div class="main-container">
-  <div class="form-column">
-    <h2 style="color: #333;">Ticket Type</h2>
+<div class="tr-page">
 
-    <form #ticketTypeForm="ngForm">
-      <div class="top-buttons">
-        <input type="button" value="New Ticket Type" (click)="newTicketType()" />
-        </div>
+  <!-- HEADER -->
+  <div class="tr-header">
+    <div>
+      <h2>Ticket Type Management</h2>
+      <p class="sub">Create, update, and manage ticket types in the same portal layout.</p>
+    </div>
 
-      <br />
-      <label>Ticket Type ID:</label><br />
-      <div class="search-group">
-        <input type="text" [(ngModel)]="ticketType.ticketTypeId" name="ticketTypeId" required maxlength="5" #typeId="ngModel" />
-        <input type="button" value="Show" (click)="showTicketType()" [disabled]="typeId.invalid" />
-      </div>
-      <br />
-
-      <label>Type Name:</label><br />
-      <input type="text" [(ngModel)]="ticketType.ticketTypeName" name="ticketTypeName" required #typeName="ngModel" />
-      <br />
-
-      <label>Description:</label><br />
-      <textarea [(ngModel)]="ticketType.description" name="description" rows="4"></textarea>
-      <br /><br />
-
-      <div class="action-footer">
-        <input type="button" value="Save" (click)="saveTicketType()" [disabled]="ticketTypeForm.invalid" />
-        <input type="button" value="Update" (click)="updateTicketType()" [disabled]="ticketTypeForm.invalid" />
-        <input type="button" value="Delete" (click)="deleteTicketType()" [disabled]="typeId.invalid" />
-      </div>
-    </form>
-    <p style="color: red; font-weight: bold;">{{ errMsg }}</p>
+    <div class="err" *ngIf="errMsg">{{ errMsg }}</div>
   </div>
 
-  <h2 style="color: #333;">List of Ticket Types</h2>
-  <div class="table-wrapper">
-    <table border="1">
-      <thead>
-        <tr>
-          <th>ID</th>
-          <th>Name</th>
-          <th>Description</th>
-          <th>Action</th>
-        </tr>
-      </thead>
-      <tbody>
-        <tr *ngFor="let tt of ticketTypes">
-          <td>{{ tt.ticketTypeId }}</td>
-          <td>{{ tt.ticketTypeName }}</td>
-          <td>{{ tt.description }}</td>
-          <td>
-            <button (click)="selectTicketType(tt)">Select</button>
-          </td>
-        </tr>
-        <tr *ngIf="ticketTypes.length === 0">
-          <td colspan="4" style="text-align: center; color: #666;">No ticket types found.</td>
-        </tr>
-      </tbody>
-    </table>
+  <div class="page-container">
+
+    <!-- ===================== LEFT : FORM ===================== -->
+    <div class="form-section card-glass">
+
+      <div class="card-title">
+        <span class="dot"></span>
+        <h3>Ticket Type Editor</h3>
+      </div>
+
+      <!-- Like Ticket: New button on top -->
+      <div class="top-actions">
+        <button type="button" class="btn ghost" (click)="newTicketType()">New</button>
+      </div>
+
+      <form #ticketTypeForm="ngForm">
+
+        <div class="grid">
+
+          <!-- Like Ticket: ID + Show in same row -->
+          <div class="field">
+            <label>Ticket Type ID</label>
+
+            <div class="inline-row">
+              <input class="inp"
+                     type="text"
+                     [(ngModel)]="ticketType.ticketTypeId"
+                     name="ticketTypeId"
+                     required
+                     maxlength="5"
+                     #typeId="ngModel"
+                     placeholder="Enter Ticket Type ID">
+
+              <button type="button"
+                      class="btn ghost"
+                      (click)="showTicketType()"
+                      [disabled]="typeId.invalid">
+                Show
+              </button>
+            </div>
+          </div>
+
+          <div class="field">
+            <label>Type Name</label>
+            <input class="inp"
+                   type="text"
+                   [(ngModel)]="ticketType.ticketTypeName"
+                   name="ticketTypeName"
+                   required
+                   #typeName="ngModel"
+                   placeholder="Enter Type Name">
+          </div>
+
+          <div class="field full">
+            <label>Description</label>
+            <textarea class="inp area"
+                      [(ngModel)]="ticketType.description"
+                      name="description"
+                      rows="4"
+                      placeholder="Enter Description"></textarea>
+          </div>
+
+        </div>
+
+        <!-- Like Ticket: action row bottom -->
+        <div class="action-row">
+          <button type="button"
+                  class="btn primary"
+                  (click)="saveTicketType()"
+                  [disabled]="ticketTypeForm.invalid">
+            Save
+          </button>
+
+          <button type="button"
+                  class="btn"
+                  (click)="updateTicketType()"
+                  [disabled]="ticketTypeForm.invalid">
+            Update
+          </button>
+
+          <button type="button"
+                  class="btn danger"
+                  (click)="deleteTicketType()"
+                  [disabled]="typeId.invalid">
+            Delete
+          </button>
+        </div>
+
+      </form>
+
+      <div class="tip">
+        💡 Tip: Use <b>Select</b> from the list to load a ticket type into the form.
+      </div>
+    </div>
+
+    <!-- ===================== RIGHT : TABLE ===================== -->
+    <div class="table-section">
+
+      <!-- Like Ticket: Topbar -->
+      <div class="topbar card-glass">
+        <div>
+          <h3 class="list-title">Ticket Types List</h3>
+          <p class="muted">All available ticket types.</p>
+        </div>
+      </div>
+
+      <!-- Like Ticket: Table container -->
+      <div class="table-wrap card-glass">
+        <table class="cool-table">
+          <thead>
+            <tr>
+              <th>Type ID</th>
+              <th>Name</th>
+              <th>Description</th>
+              <th style="width:120px;">Action</th>
+            </tr>
+          </thead>
+
+          <tbody>
+            <tr *ngFor="let tt of ticketTypes">
+              <td><span class="pill">{{ tt.ticketTypeId }}</span></td>
+              <td>{{ tt.ticketTypeName }}</td>
+              <td class="text-col">{{ tt.description }}</td>
+              <td>
+                <button type="button" class="btn ghost smallbtn" (click)="selectTicketType(tt)">
+                  Select
+                </button>
+              </td>
+            </tr>
+
+            <tr *ngIf="ticketTypes.length === 0">
+              <td colspan="4" class="empty">📭 No ticket types found</td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+
+    </div>
   </div>
 </div>

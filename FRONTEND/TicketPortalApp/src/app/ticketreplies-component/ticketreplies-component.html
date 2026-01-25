@@ -1,30 +1,214 @@
-<!-- Role radio buttons + dynamic ID display -->
-<div class="role-box">
-  <label>
-    <input type="radio"
-           name="viewRole"
-           [(ngModel)]="viewRole"
-           value="creator">
-    Creator
-  </label>
+<div class="tr-page">
 
-  <label>
-    <input type="radio"
-           name="viewRole"
-           [(ngModel)]="viewRole"
-           value="assignee">
-    Assignee
-  </label>
-</div>
+  <!-- HEADER -->
+  <div class="tr-header">
+    <div>
+      <h2>Ticket Reply Management</h2>
+      <p class="sub">Create, track, and view replies in a clean chat-style thread.</p>
+    </div>
 
-<div class="who-box" *ngIf="reply?.replyId">
-  <ng-container *ngIf="viewRole === 'creator'">
-    <b>Assigned Employee ID:</b>
-    <span>{{ reply.assignedEmployeeId || 'Unassigned' }}</span>
-  </ng-container>
+    <div class="err" *ngIf="errMsg">{{ errMsg }}</div>
+  </div>
 
-  <ng-container *ngIf="viewRole === 'assignee'">
-    <b>Creator Employee ID:</b>
-    <span>{{ reply.createdEmployeeId }}</span>
-  </ng-container>
+  <div class="page-container">
+
+    <!-- ===================== LEFT : FORM ===================== -->
+    <div class="form-section card-glass">
+
+      <div class="card-title">
+        <span class="dot"></span>
+        <h3>Reply Editor</h3>
+      </div>
+
+      <!-- ✅ TOP LEFT : NEW (like Ticket page) -->
+      <div class="top-actions">
+        <button type="button" class="btn ghost" (click)="newReply()">New</button>
+      </div>
+
+      <div class="grid">
+
+        <!-- ✅ Reply ID + Show button same row (like Ticket ID + Show) -->
+        <div class="field">
+          <label>Reply ID</label>
+
+          <div class="inline-row">
+            <input class="inp"
+                   type="text"
+                   [(ngModel)]="reply.replyId"
+                   name="replyId"
+                   maxlength="5"
+                   placeholder="Enter Reply ID">
+
+            <button type="button"
+                    class="btn ghost"
+                    (click)="getReply()"
+                    [disabled]="!reply.replyId">
+              Show
+            </button>
+          </div>
+        </div>
+
+        <div class="field">
+          <label>Ticket ID</label>
+          <select class="inp"
+                  [(ngModel)]="reply.ticketId"
+                  name="ticketId"
+                  (change)="onTicketIdChange(reply.ticketId)">
+            <option value="">Select Ticket</option>
+            <option *ngFor="let t of tickets" [value]="t.ticketId">{{ t.ticketId }}</option>
+          </select>
+        </div>
+
+        <div class="field">
+          <label>Select Replier</label>
+          <select class="inp" [(ngModel)]="replier" name="replier">
+            <option value="">Select Replier</option>
+            <option value="creator">Creator</option>
+            <option value="assigner">Assigner</option>
+          </select>
+        </div>
+
+        <div class="field full">
+          <label>Reply Text</label>
+          <textarea class="inp area"
+                    [(ngModel)]="reply.replyText"
+                    name="replyText"
+                    placeholder="Type your reply here..."></textarea>
+        </div>
+
+        <div class="field">
+          <label>Replied Date</label>
+          <input class="inp"
+                 type="date"
+                 name="repliedDate"
+                 (change)="setDateFromInput($event)">
+        </div>
+
+      </div>
+
+      <!-- ✅ Bottom buttons like Ticket page -->
+      <div class="action-row">
+        <button type="button" class="btn primary" (click)="addReply()">Save</button>
+        <button type="button" class="btn" (click)="updateReply()">Update</button>
+        <button type="button" class="btn danger" (click)="deleteReply()">Delete</button>
+      </div>
+
+      <div class="tip">
+        💡 Tip: Use the filter on the right to instantly view a ticket conversation.
+      </div>
+
+    </div>
+
+    <!-- ===================== RIGHT : TABLE + CHAT ===================== -->
+    <div class="table-section">
+
+      <!-- TOP BAR -->
+      <div class="topbar card-glass">
+        <div>
+          <h3 class="list-title">Replies List</h3>
+          <p class="muted">Filter to view specific ticket thread.</p>
+        </div>
+
+        <div class="filter">
+          <div class="filter-box">
+            <span class="icon">🔎</span>
+            <input class="inp small"
+                   type="text"
+                   [(ngModel)]="filterTicketId"
+                   (input)="filterByTicketId()"
+                   placeholder="Filter by Ticket ID (e.g. T0001)">
+          </div>
+
+          <button class="btn ghost"
+                  type="button"
+                  (click)="filterTicketId=''; filterByTicketId()">
+            Clear
+          </button>
+
+          <!-- ✅ Show All button here (like Ticket page top filter) -->
+          <button class="btn ghost"
+                  type="button"
+                  (click)="showAllReplies()">
+            Show All
+          </button>
+        </div>
+      </div>
+
+      <!-- TABLE -->
+      <div class="table-wrap card-glass">
+        <table class="cool-table">
+          <thead>
+            <tr>
+              <th>Reply ID</th>
+              <th>Ticket ID</th>
+              <th>Reply Text</th>
+              <th>Created</th>
+              <th>Assigned</th>
+              <th>Date</th>
+            </tr>
+          </thead>
+
+          <tbody>
+            <tr *ngFor="let r of filteredReplies">
+              <td><span class="pill">{{ r.replyId }}</span></td>
+              <td><span class="pill pill2">{{ r.ticketId }}</span></td>
+              <td class="text-col">{{ r.replyText }}</td>
+              <td>{{ r.createdEmployeeId }}</td>
+              <td>{{ r.assignedEmployeeId }}</td>
+              <td>{{ r.repliedDate | date:'yyyy-MM-dd' }}</td>
+            </tr>
+
+            <tr *ngIf="filteredReplies.length === 0">
+              <td colspan="6" class="empty">📭 No replies found</td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+
+      <!-- CHAT -->
+      <div *ngIf="filteredReplies.length > 0" class="chat-container card-glass">
+
+        <div class="chat-head">
+          <h4 class="chat-title">
+            Ticket: {{ filteredReplies[0].ticketId }}
+          </h4>
+
+          <div class="chat-users">
+            <span class="chip">
+              <b>Creator:</b> {{ filteredReplies[0].createdEmployeeId }}
+            </span>
+            <span class="chip">
+              <b>Assignee:</b> {{ filteredReplies[0].assignedEmployeeId }}
+            </span>
+          </div>
+        </div>
+
+        <div class="chat-body">
+          <div *ngFor="let r of filteredReplies; let i = index" class="chat-row">
+
+            <div class="chat-meta">
+              <span class="chat-id">#{{ i + 1 }}</span>
+              <span class="chat-date">{{ r.repliedDate | date:'yyyy-MM-dd' }}</span>
+            </div>
+
+            <div class="chat-bubble">
+              <div class="chat-note">
+                Message in conversation between
+                <b>{{ r.createdEmployeeId }}</b> and <b>{{ r.assignedEmployeeId }}</b>
+              </div>
+
+              <div class="chat-text">{{ r.replyText }}</div>
+            </div>
+
+          </div>
+        </div>
+      </div>
+
+      <!-- NO REPLIES -->
+      <div *ngIf="filteredReplies.length === 0" class="no-replies">
+        📭 No replies found
+      </div>
+
+    </div>
+  </div>
 </div>

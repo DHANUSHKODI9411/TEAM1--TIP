@@ -1,7 +1,47 @@
-<h2>Login Form</h2>
-<form #registerForm="ngForm">
-    EmpId:<input type="text" [(ngModel)]="EmployeeId" name="EmployeeId">
-    Password:<input type="text" [(ngModel)]="Password" name="Password"><br>
-    <input type="button" value="Login" (click)="login()">
-</form>
-<div style="color:red">{{errMsg}}</div>
+<div class="login-page">
+
+  <div class="login-card">
+
+    <!-- LEFT : LOGIN FORM -->
+    <div class="left">
+
+
+      <h2 class="title">Login</h2>
+      <p class="subtitle">To Access Ticket Portal</p>
+
+      <form #registerForm="ngForm" class="form">
+
+        <label class="lbl">Employee ID</label>
+        <input class="inp"
+               type="text"
+               [(ngModel)]="EmployeeId"
+               name="EmployeeId"
+               placeholder="Enter Employee ID"
+               required>
+
+        <label class="lbl">Password</label>
+        <input class="inp"
+               type="password"
+               [(ngModel)]="Password"
+               name="Password"
+               placeholder="Enter Password"
+               required>
+
+        <button type="button"
+                class="btn primary"
+                (click)="login()"
+                [disabled]="registerForm.invalid">
+          Login
+        </button>
+
+      </form>
+
+      <div class="err" *ngIf="errMsg">{{ errMsg }}</div>
+
+    </div>
+
+    
+
+  </div>
+
+</div>

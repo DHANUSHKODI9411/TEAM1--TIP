@@ -1,42 +1,160 @@
-<h2>Status Form</h2>
-<form>
-    <input type="button" value="New" (click)="newStatus()" /> <br />
-    Status ID : <input type="text" [(ngModel)]="status.statusId" name="status.statusId" maxlength="5" /> &nbsp;
-    <input type="button" value="Show" (click)="showStatus()" /> <br />
+<div class="tr-page">
 
-    Status Name : <input type="text" [(ngModel)]="status.statusName" name="status.statusName" maxlength="30" /> <br />
+  <!-- HEADER -->
+  <div class="tr-header">
+    <div>
+      <h2>Status Management</h2>
+      <p class="sub">Create, update, and manage ticket statuses in the same portal layout.</p>
+    </div>
 
-    Description : <textarea [(ngModel)]="status.description" name="status.description"
-    rows="3" cols="50" maxlength="100" placeholder="Enter status description..."></textarea> <br />
+    <div class="err" *ngIf="errMsg">{{ errMsg }}</div>
+  </div>
 
-    Is Active :
-    <select [(ngModel)]="status.isActive" name="status.isActive">
-      <option [ngValue]="true">In Progress</option>
-      <option [ngValue]="false">Completed</option>
-    </select> <br />
+  <div class="page-container">
 
-    <input type="button" value="Save" (click)="saveStatus()" /> &nbsp;
-    <input type="button" value="Update" (click)="updateStatus()" /> &nbsp;
-    <input type="button" value="Delete" (click)="deleteStatus()" />
-</form>
-<p style="color: red;">{{ errMsg }}</p>
+    <!-- ===================== LEFT : FORM ===================== -->
+    <div class="form-section card-glass">
 
-<h2>List of Statuses</h2>
-<table border="1">
-    <thead>
-        <tr>
-            <th>Status ID</th>
-            <th>Status Name</th>
-            <th>Description</th>
-            <th>Status</th>
-        </tr>
-    </thead>
-    <tbody>
-        <tr *ngFor="let s of statuss">
-            <td>{{ s.statusId }}</td>
-            <td>{{ s.statusName }}</td>
-            <td>{{ s.description || 'N/A' }}</td>
-            <td>{{ s.isActive ? 'In Progress' : 'Completed' }}</td>
-        </tr>
-    </tbody>
-</table>
+      <div class="card-title">
+        <span class="dot"></span>
+        <h3>Status Editor</h3>
+      </div>
+
+      <!-- Like Ticket: New button top -->
+      <div class="top-actions">
+        <button type="button" class="btn ghost" (click)="newStatus()">New</button>
+      </div>
+
+      <form #statusForm="ngForm">
+
+        <div class="grid">
+
+          <!-- Status ID + Show inline -->
+          <div class="field">
+            <label>Status ID</label>
+
+            <div class="inline-row">
+              <input class="inp"
+                     type="text"
+                     [(ngModel)]="status.statusId"
+                     name="statusId"
+                     maxlength="5"
+                     required
+                     #sid="ngModel"
+                     placeholder="Enter Status ID">
+
+              <button type="button"
+                      class="btn ghost"
+                      (click)="showStatus()"
+                      [disabled]="sid.invalid">
+                Show
+              </button>
+            </div>
+          </div>
+
+          <div class="field">
+            <label>Status Name</label>
+            <input class="inp"
+                   type="text"
+                   [(ngModel)]="status.statusName"
+                   name="statusName"
+                   maxlength="30"
+                   required
+                   #sname="ngModel"
+                   placeholder="Enter Status Name">
+          </div>
+
+          <div class="field full">
+            <label>Description</label>
+            <textarea class="inp area"
+                      [(ngModel)]="status.description"
+                      name="description"
+                      rows="3"
+                      maxlength="100"
+                      placeholder="Enter status description..."></textarea>
+          </div>
+
+          <div class="field">
+            <label>Status</label>
+            <select class="inp"
+                    [(ngModel)]="status.isActive"
+                    name="isActive">
+              <option [ngValue]="true">In Progress</option>
+              <option [ngValue]="false">Completed</option>
+            </select>
+          </div>
+
+        </div>
+
+        <!-- Save / Update / Delete -->
+        <div class="action-row">
+          <button type="button"
+                  class="btn primary"
+                  (click)="saveStatus()"
+                  [disabled]="statusForm.invalid">
+            Save
+          </button>
+
+          <button type="button"
+                  class="btn"
+                  (click)="updateStatus()"
+                  [disabled]="statusForm.invalid">
+            Update
+          </button>
+
+          <button type="button"
+                  class="btn danger"
+                  (click)="deleteStatus()"
+                  [disabled]="sid.invalid">
+            Delete
+          </button>
+        </div>
+
+      </form>
+
+      <div class="tip">
+        💡 Tip: Use <b>Show</b> to load a status and then update/delete.
+      </div>
+
+    </div>
+
+    <!-- ===================== RIGHT : TABLE ===================== -->
+    <div class="table-section">
+
+      <div class="topbar card-glass">
+        <div>
+          <h3 class="list-title">List of Statuses</h3>
+          <p class="muted">All status values used in tickets.</p>
+        </div>
+      </div>
+
+      <div class="table-wrap card-glass">
+        <table class="cool-table">
+          <thead>
+            <tr>
+              <th>Status ID</th>
+              <th>Status Name</th>
+              <th>Description</th>
+              <th>Status</th>
+            </tr>
+          </thead>
+
+          <tbody>
+            <tr *ngFor="let s of statuss">
+              <td><span class="pill">{{ s.statusId }}</span></td>
+              <td>{{ s.statusName }}</td>
+              <td class="text-col">{{ s.description || 'N/A' }}</td>
+              <td>{{ s.isActive ? 'In Progress' : 'Completed' }}</td>
+            </tr>
+
+            <tr *ngIf="!statuss || statuss.length === 0">
+              <td colspan="4" class="empty">📭 No statuses found</td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+
+    </div>
+
+  </div>
+</div>

@@ -20,6 +20,7 @@ export class LoginComponent {
   EmployeeId:string;
   Password:string;
   errMsg:string;
+  
   constructor(){
     this.EmployeeId="";
     this.Password="";
@@ -34,8 +35,15 @@ export class LoginComponent {
         // Store ALL session data FIRST
         sessionStorage.setItem('empName', this.Employee.employeeName);
         sessionStorage.setItem('userRole', this.Employee.role || 'User');
+        
+const empId = this.Employee.employeeId;
+if (empId != null) {
+  sessionStorage.setItem('employeeId', String(empId));
+}
 
-        // Update auth service LAST
+        
+
+     
         this.authSvc.setLogin(this.Employee.employeeName, this.Employee.role);
 
         this.errMsg="";
